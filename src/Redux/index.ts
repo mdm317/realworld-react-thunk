@@ -25,10 +25,11 @@ export type RootState = ReturnType<typeof rootReducer>;
 const makeStore = () => {
   const store = createStore(
     rootReducer,
-    composeWithDevTools(applyMiddleware(reduxThunk, createLogger()))
+    composeWithDevTools(applyMiddleware(reduxThunk))
   );
   return store;
 };
+// createLogger()
 // const store = createStore(
 //   rootReducer,
 //   composeWithDevTools(applyMiddleware(reduxThunk, createLogger()))

@@ -10,7 +10,7 @@ import {
   ServerAction,
   serverFailAction,
 } from "../Redux/Server/reducer";
-import { UserActionType, LoginAction } from "../Redux/User/types";
+import { LoginAction } from "../Redux/User/types";
 import { User } from "../db";
 
 export function loginThunk({
@@ -36,8 +36,7 @@ export function loginThunk({
         dispatch(loginFailAction(e.response.data.errors));
         throw Error("Check error message");
       }
-      dispatch(serverFailAction("Internal Server Error"));
-      throw Error("Internal Server Error");
+      throw Error("Internal Server Error! Try rater!");
     }
   };
 }
