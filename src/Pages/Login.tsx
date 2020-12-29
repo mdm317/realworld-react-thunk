@@ -12,9 +12,7 @@ export default function Login(): JSX.Element {
   const { isLodding, loginErr: errors } = useSelector(
     (state: RootState) => state.user
   );
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>
-  ) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("issubmitted");
 
@@ -36,7 +34,7 @@ export default function Login(): JSX.Element {
         toast.success("login success!");
         history.push("/");
       })
-      .catch((error: any) => {
+      .catch((error: Error) => {
         toast.error(error.message);
       });
   };

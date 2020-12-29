@@ -6,7 +6,7 @@ interface LoginPayload {
 }
 // type AsyncFunction <A,O> = (...args:A) => Promise<O>
 // type SearchFn = AsyncFunction<[string], string>
-export const loginAPI = async (payload: LoginPayload) => {
+export const loginAPI = async (payload: LoginPayload): Promise<User> => {
   const response = await Axios.post(url + "/users/login", {
     user: payload,
   });
