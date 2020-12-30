@@ -1,10 +1,43 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import ErrorMessage from "../Component/ErrorMessage";
+import { AppDispatch, RootState } from "../Redux";
+import { signupThunk } from "../Thunk/user";
 
 export default function Login(): JSX.Element {
+  const history = useHistory();
+  const dispatch: AppDispatch = useDispatch();
+  const { isLodding, signupErr: errors } = useSelector(
+    (state: RootState) => state.user
+  );
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
-    const { usernameInput, passwordInput, useridInput } = form;
+    const usernameInput = form.elements.namedItem(
+      "usernameInput"
+    ) as HTMLInputElement;
+    const useremailInput = form.elements.namedItem(
+      "useremailInput"
+    ) as HTMLInputElement;
+    const passwordInput = form.elements.namedItem(
+      "passwordInput"
+    ) as HTMLInputElement;
+    const signupUser = {
+      username: usernameInput.value,
+      email: useremailInput.value,
+      password: passwordInput.value,
+    };
+    dispatch(signupThunk(signupUser))
+      .then(() => {
+        toast.success("Signup Success");
+        history.push("/login");
+      })
+      .catch((error: Error) => {
+        toast.error(error.message);
+      });
+    // const { usernameInput, passwordInput, useridInput } = form;
   };
   return (
     <div className="auth-page">
@@ -13,16 +46,13 @@ export default function Login(): JSX.Element {
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Sign up</h1>
             <p className="text-xs-center">
-              <a href="">Have an account?</a>
+              <Link to="/login">Have an account?</Link>
             </p>
 
-            <ul className="error-messages">
-              <li>That email is already taken</li>
-            </ul>
+            {errors && <ErrorMessage errors={errors} />}
 
             <form onSubmit={handleSubmit}>
               <fieldset className="form-group">
-                <label htmlFor="usernameInput"></label>
                 <input
                   id="usernameInput"
                   className="form-control form-control-lg"
@@ -31,16 +61,14 @@ export default function Login(): JSX.Element {
                 ></input>
               </fieldset>
               <fieldset className="form-group">
-                <label htmlFor="useridInput"></label>
                 <input
-                  id="useridInput"
+                  id="useremailInput"
                   className="form-control form-control-lg"
                   type="text"
                   placeholder="Email"
                 ></input>{" "}
               </fieldset>
               <fieldset className="form-group">
-                <label htmlFor="passwordInput"></label>
                 <input
                   id="passwordInput"
                   className="form-control form-control-lg"
@@ -48,9 +76,21 @@ export default function Login(): JSX.Element {
                   placeholder="Password"
                 ></input>{" "}
               </fieldset>
-              <button className="btn btn-lg btn-primary pull-xs-right">
-                Sign up
-              </button>
+              {isLodding ? (
+                <button
+                  type="button"
+                  className="btn btn-lg btn-primary pull-xs-right"
+                >
+                  ...Loading
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  className="btn btn-lg btn-primary pull-xs-right"
+                >
+                  Sign Up
+                </button>
+              )}
             </form>
           </div>
         </div>

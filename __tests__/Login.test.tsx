@@ -33,6 +33,9 @@ afterEach(() => {
   destroyToken();
 });
 afterAll(() => server.close());
+function wrapWithRouter(component: JSX.Element, history: any) {
+  return <Router history={history}>{component}</Router>;
+}
 function renderWithProvidersAndToast(component: JSX.Element) {
   const store = makeStore();
   return render(
@@ -51,7 +54,9 @@ test("로그인 실패", async () => {
       );
     })
   );
-  renderWithProvidersAndToast(<Login />);
+  const history = createMemoryHistory();
+
+  renderWithProvidersAndToast(wrapWithRouter(<Login />, history));
 
   // fill out the form
   fireEvent.change(screen.getByPlaceholderText("Email"), {
@@ -82,13 +87,8 @@ test("로그인 성공", async () => {
     })
   );
   const history = createMemoryHistory();
-  const component = (
-    <Router history={history}>
-      <Login />
-    </Router>
-  );
 
-  renderWithProvidersAndToast(component);
+  renderWithProvidersAndToast(wrapWithRouter(<Login />, history));
 
   // fill out the form
   fireEvent.change(screen.getByPlaceholderText("Email"), {
@@ -116,7 +116,9 @@ test("서버 에러", async () => {
     })
   );
 
-  renderWithProvidersAndToast(<Login />);
+  const history = createMemoryHistory();
+
+  renderWithProvidersAndToast(wrapWithRouter(<Login />, history));
 
   fireEvent.change(screen.getByPlaceholderText("Email"), {
     target: { value: "gpffh@a.a" },

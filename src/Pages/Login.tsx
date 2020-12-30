@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ErrorMessage from "../Component/ErrorMessage";
 import { AppDispatch, RootState } from "../Redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { loginThunk } from "../Thunk/user";
 
 export default function Login(): JSX.Element {
@@ -14,7 +14,6 @@ export default function Login(): JSX.Element {
   );
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("issubmitted");
 
     const form = e.target as HTMLFormElement;
     const emailInput = form.elements.namedItem(
@@ -44,6 +43,9 @@ export default function Login(): JSX.Element {
         <div className="row">
           <div className="col-md-6 offset-md-3 col-xs-12">
             <h1 className="text-xs-center">Log in</h1>
+            <p className="text-xs-center">
+              <Link to="signup">{"Don't Have an account?"}</Link>
+            </p>
             {errors && <ErrorMessage errors={errors} />}
             <form onSubmit={handleSubmit}>
               <fieldset className="form-group">
