@@ -6,8 +6,13 @@ import makeStore from "./Redux/index";
 
 const store = makeStore();
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <App />,
+
   document.getElementById("root")
 );
+// ReactDOM.render(
+//   <Provider store={store}>
+//     <App />
+//   </Provider>,
+//   document.getElementById("root")
+// );

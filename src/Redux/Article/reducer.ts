@@ -1,7 +1,7 @@
 import * as types from "./types";
 import { Article } from "../../db";
 interface ArticleState {
-  articleList: [Article] | null;
+  articleList: Article[] | null;
   articleDetail: Article | null;
   articleIsLoading: boolean;
   serverErr: null | string;
