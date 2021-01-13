@@ -1,0 +1,1 @@
+ Cannot update a component (`ArticleList`) while rendering a different component (`GlobalArticleList`). To locate the bad setState() call inside `GlobalArticleList`, follow the stack trace as described in
