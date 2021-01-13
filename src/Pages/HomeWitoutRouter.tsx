@@ -12,25 +12,22 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { GetArticleCondition } from "../Api/article";
-import GlobalArticleList from "../Component/GlobalArticleList";
+import GlobalArticleList from "../Component/WithoutRouter/GlobalArticleListWithoutRouter";
 import Pagenation from "../Component/Pagenation";
+import PagenationWithRouter from "../Component/WithoutRouter/PagenationWithoutRouter";
 import { RootState } from "../Redux";
 
 import NotFound from "./NotFound";
 
-// const pagePerPagenation = 5;
+const pagePerPagenation = 10;
 
 export default function Home(): JSX.Element {
-  const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
-  const history = useHistory();
-  // const articleIsLoading = useSelector(
-  //   (state: RootState) => state.article.articleIsLoading
-  // );
-  useEffect(() => {
-    history.push(`${match.url}?page=1`);
-  }, []);
+
   const [currentPage, setCurrentPage] = useState(1);
+  useEffect(() => {
+    console.log("currentPage", currentPage);
+  }, [currentPage]);
   const [
     getArticleCondition,
     setarticleCondition,
@@ -80,39 +77,21 @@ export default function Home(): JSX.Element {
               </div>
               <Route
                 path={`${match.url}`}
-                render={() => (
-                  <>
-                    <GlobalArticleList pagePerPagenation={pagePerPagenation} />
-                    <Pagenation
-                      setCurrentPage={setCurrentPage}
-                      currentPage={currentPage}
-                      pagePerPagenation={pagePerPagenation}
-                    />
-                  </>
+                render={(prop) => (
+                  <GlobalArticleList
+                    {...prop}
+                    getArticleCondition={getArticleCondition}
+                  />
                 )}
               />
-              {/* {articleIsLoading ? (
-                <h1>Is Loading...</h1>
-              ) : (
-                <Route
-                  path={`${match.url}`}
-                  render={(prop) => (
-                    <>
-                      <GlobalArticleList
-                        pagePerPagenation={pagePerPagenation}
-                      />
-                      <Pagenation
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                        pagePerPagenation={pagePerPagenation}
-                      />
-                    </>
-                  )}
-                />
-              )} */}
+              <Pagenation
+                setCurrentPage={setCurrentPage}
+                currentPage={currentPage}
+                pagePerPagenation={pagePerPagenation}
+              />
             </div>
           </BrowserRouter>
-          {/* <div className="col-md-3">
+          <div className="col-md-3">
             <div className="sidebar">
               <p>Popular Tags</p>
 
@@ -144,7 +123,6 @@ export default function Home(): JSX.Element {
               </div>
             </div>
           </div>
-      */}
         </div>
       </div>
     </div>

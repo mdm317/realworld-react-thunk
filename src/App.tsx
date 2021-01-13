@@ -1,21 +1,33 @@
-import React from "react";
-import Home from "./Pages/Home";
-import SignUp from "./Pages/SignUp";
+import React, { useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { Route, BrowserRouter, Switch } from "react-router-dom";
-import Login from "./Pages/Login";
+import {
+  Route,
+  BrowserRouter,
+  Switch,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-const h1 = () => {
-  return <h1>hello</h1>;
-};
-export default function App() {
+import Home from "./Pages/Home";
+import SignUp from "./Pages/SignUp";
+import Login from "./Pages/Login";
+import Layout from "./Component/Layout/Layout";
+
+export default function App(): JSX.Element {
   return (
     <>
       <BrowserRouter>
-        <Route path="/h" component={h1} />
+        <Layout>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={SignUp} />
+            <Route component={() => <h1>NOT FOUND</h1>} />
+          </Switch>
+        </Layout>
       </BrowserRouter>
-      {/* <ToastContainer /> */}
+      <ToastContainer />
     </>
   );
 }

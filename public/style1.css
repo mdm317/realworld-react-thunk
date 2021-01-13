@@ -1,0 +1,7 @@
+.page-item .page-link .active {
+  z-index: 2;
+  color: #fff;
+  cursor: default;
+  background-color: #5cb85c;
+  border-color: #5cb85c;
+}

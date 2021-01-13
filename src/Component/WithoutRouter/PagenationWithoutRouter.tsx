@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import { RootState } from "../Redux";
-import queryString from "query-string";
+import { RootState } from "../../Redux";
 
 interface PagenationProp {
   pagePerPagenation: number;
   currentPage: number;
   setCurrentPage: (prop: number) => void;
 }
-export default function Pagenation({
+export default function PagenationWithRouter({
   pagePerPagenation,
   currentPage,
   setCurrentPage,
 }: PagenationProp): JSX.Element {
-  const match = useRouteMatch();
   const [pagenationList, setpagenationList] = useState<number[]>([]);
   const articleCouts = useSelector(
     (state: RootState) => state.article.articlesCounts
   );
-
-  const query = queryString.parse(location.search);
-
   const startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
   const pagenationNum = Math.min(
     10,
@@ -68,7 +63,7 @@ export default function Pagenation({
   };
   return (
     <nav>
-      <ul className="pagenation" aria-label="pagenation">
+      <ul className="pagination">
         <li className="page-item">
           <a onClick={handleClick} id="pre" className="page-link">
             {" "}
@@ -79,19 +74,12 @@ export default function Pagenation({
           <li
             key={page}
             className={`page-item +' '+ ${
-              page === Number(query.page) ? "active" : ""
+              page === currentPage ? "active" : ""
             }`}
           >
-            {/* <Link to={{ pathname: '/foo', query: { the: 'query' } }}/> */}
-            <Link
-              to={{
-                search: `?page=${page}`,
-                pathname: `${match.url}`,
-              }}
-              className="page-link "
-            >
+            <a onClick={handleClickPage} className="page-link ">
               {page}
-            </Link>
+            </a>
           </li>
         ))}
         <li className="page-item">

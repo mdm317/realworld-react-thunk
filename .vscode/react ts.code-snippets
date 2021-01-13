@@ -15,7 +15,7 @@
   // 	],
   // 	"description": "Log output to console"
   // }
-  "Print to console": {
+  "Start React": {
     "scope": "typescriptreact",
     "prefix": "rea",
     "body": [
@@ -36,5 +36,14 @@
       "export const $1_FAILURE = '$1_FAILURE';"
     ],
     "description": "Log output to console"
+  },
+    "Print to console with lable": {
+      "scope": "typescriptreact",
+  	"prefix": "llog",
+  	"body": [
+  		"console.log('$1',$1);",
+  		"$2"
+  	],
+  	"description": "Log output to console"
   }
 }

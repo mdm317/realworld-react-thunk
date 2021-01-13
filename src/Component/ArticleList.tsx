@@ -9,16 +9,22 @@ export default function ArticleList(): JSX.Element {
   );
   return (
     <>
-      {articleList?.map((article) => (
-        <div className="article-preview" key={article.slug}>
-          <UserMeta article={article}></UserMeta>
-          <a href="/article/detail" className="preview-link">
-            <h1>{article.title}</h1>
-            <p> {article.description}</p>
-            <span>Read more...</span>
-          </a>
-        </div>
-      ))}
+      {articleList ? (
+        <ul aria-label="Article list">
+          {articleList.map((article) => (
+            <li className="article-preview" key={article.slug}>
+              <UserMeta article={article}></UserMeta>
+              <a href="/article/detail" className="preview-link">
+                <h1>{article.title}</h1>
+                <p> {article.description}</p>
+                <span>Read more...</span>
+              </a>
+            </li>
+          ))}{" "}
+        </ul>
+      ) : (
+        <h3>Is Loading...</h3>
+      )}
     </>
   );
 }
