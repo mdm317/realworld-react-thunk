@@ -15,9 +15,5 @@ export default function GlobalArticleList({
   useEffect(() => {
     dispatch(getArticleList(getArticleCondition));
   }, []);
-  return (
-    <>
-      <ArticleList />
-    </>
-  );
+  return <>{/* <ArticleList /> */}</>;
 }
