@@ -1,4 +1,10 @@
-export const responseArticleListLimit5 = {
+import { Article } from "../src/db";
+
+interface ResponseArticle {
+  articles: Article[];
+  articlesCount: number;
+}
+export const responseArticleListLimit5: ResponseArticle = {
   articles: [
     {
       slug: "how-to-train-your-dragon",
@@ -88,7 +94,7 @@ export const responseArticleListLimit5 = {
   ],
   articlesCount: 500,
 };
-export const responseArticleListCounts40 = {
+export const responseArticleListCounts40: ResponseArticle = {
   articles: [
     {
       slug: "how-to-train-your-dragon",
@@ -177,4 +183,94 @@ export const responseArticleListCounts40 = {
     },
   ],
   articlesCount: 40,
+};
+export const responseArticleOffset30 = {
+  articles: [
+    {
+      slug: "how-to-train-your-dragon page 7",
+      title: "How to train your dragon page 7",
+      description: "Ever wonder how? page 7",
+      body: "It takes a Jacobian",
+      tagList: ["dragons", "training"],
+      createdAt: "2016-02-18T03:22:56.637Z",
+      updatedAt: "2016-02-18T03:48:35.824Z",
+      favorited: false,
+      favoritesCount: 0,
+      author: {
+        username: "jake",
+        bio: "I work at statefarm",
+        image: "https://i.stack.imgur.com/xHWG8.jpg",
+        following: false,
+      },
+    },
+    {
+      slug: "how-to-train-your-dragon-2 page 7",
+      title: "How to train your dragon 2 page 7",
+      description: "So toothless page 7",
+      body: "It a dragon",
+      tagList: ["dragons", "training"],
+      createdAt: "2016-02-18T03:22:56.637Z",
+      updatedAt: "2016-02-18T03:48:35.824Z",
+      favorited: false,
+      favoritesCount: 0,
+      author: {
+        username: "jake",
+        bio: "I work at statefarm",
+        image: "https://i.stack.imgur.com/xHWG8.jpg",
+        following: false,
+      },
+    },
+    {
+      slug: "how-to-train-your-dragon-3 page 7",
+      title: "How to train your dragon page 7",
+      description: "Ever wonder how? page 7",
+      body: "It takes a Jacobian",
+      tagList: ["dragons", "training"],
+      createdAt: "2016-02-18T03:22:56.637Z",
+      updatedAt: "2016-02-18T03:48:35.824Z",
+      favorited: false,
+      favoritesCount: 0,
+      author: {
+        username: "jake",
+        bio: "I work at statefarm",
+        image: "https://i.stack.imgur.com/xHWG8.jpg",
+        following: false,
+      },
+    },
+    {
+      slug: "how-to-train-your-dragon-4 page 7",
+      title: "How to train your dragon page 7",
+      description: "Ever wonder how? page 7",
+      body: "It takes a Jacobian",
+      tagList: ["dragons", "training"],
+      createdAt: "2016-02-18T03:22:56.637Z",
+      updatedAt: "2016-02-18T03:48:35.824Z",
+      favorited: false,
+      favoritesCount: 0,
+      author: {
+        username: "jake",
+        bio: "I work at statefarm",
+        image: "https://i.stack.imgur.com/xHWG8.jpg",
+        following: false,
+      },
+    },
+    {
+      slug: "how-to-train-your-dragon-5 page 7",
+      title: "How to train your dragon page 7",
+      description: "Ever wonder how? page 7",
+      body: "It takes a Jacobian",
+      tagList: ["dragons", "training"],
+      createdAt: "2016-02-18T03:22:56.637Z",
+      updatedAt: "2016-02-18T03:48:35.824Z",
+      favorited: false,
+      favoritesCount: 0,
+      author: {
+        username: "jake",
+        bio: "I work at statefarm",
+        image: "https://i.stack.imgur.com/xHWG8.jpg",
+        following: false,
+      },
+    },
+  ],
+  articlesCount: 500,
 };

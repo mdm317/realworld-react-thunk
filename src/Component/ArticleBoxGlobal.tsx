@@ -6,11 +6,12 @@ import { getArticleList } from "../Thunk/article";
 import ArticleList from "./ArticleList";
 import queryString from "query-string";
 import { RootState } from "../Redux";
+import Pagenation from "./Pagenation";
 
 interface globalArticleListprop {
   pagePerPagenation: number;
 }
-export default function GlobalArticleList({
+export default function ArticleBoxGlobal({
   pagePerPagenation,
 }: globalArticleListprop): JSX.Element {
   const dispatch = useDispatch();
@@ -29,7 +30,6 @@ export default function GlobalArticleList({
       const offset = (pageNum - 1) * pagePerPagenation;
       getArticleCondition.offset = offset;
     }
-    console.log(getArticleCondition);
 
     dispatch(getArticleList(getArticleCondition));
   }, [location]);
@@ -37,7 +37,10 @@ export default function GlobalArticleList({
   return (
     <>
       {articleList ? (
-        <ArticleList articleList={articleList} />
+        <>
+          <ArticleList articleList={articleList} />
+          <Pagenation pagePerPagenation={pagePerPagenation} />
+        </>
       ) : (
         <h3>Is Loading...</h3>
       )}

@@ -84,11 +84,7 @@ export default function Home(): JSX.Element {
                   />
                 )}
               />
-              <Pagenation
-                setCurrentPage={setCurrentPage}
-                currentPage={currentPage}
-                pagePerPagenation={pagePerPagenation}
-              />
+              <Pagenation pagePerPagenation={pagePerPagenation} />
             </div>
           </BrowserRouter>
           <div className="col-md-3">

@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, NavLink, useRouteMatch } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useHistory,
+  useLocation,
+  useRouteMatch,
+} from "react-router-dom";
 import { toast } from "react-toastify";
 import { RootState } from "../Redux";
 import queryString from "query-string";
 
 interface PagenationProp {
   pagePerPagenation: number;
-  currentPage: number;
-  setCurrentPage: (prop: number) => void;
 }
 export default function Pagenation({
   pagePerPagenation,
-  currentPage,
-  setCurrentPage,
 }: PagenationProp): JSX.Element {
-  const match = useRouteMatch();
-  const [pagenationList, setpagenationList] = useState<number[]>([]);
   const articleCouts = useSelector(
     (state: RootState) => state.article.articlesCounts
   );
 
+  const [pagenationList, setpagenationList] = useState<number[]>([]);
+
+  const match = useRouteMatch();
+  const location = useLocation();
+
   const query = queryString.parse(location.search);
 
-  const startPage = Math.floor((currentPage - 1) / 10) * 10 + 1;
-  const pagenationNum = Math.min(
-    10,
-    Math.ceil(articleCouts / pagePerPagenation) - startPage + 1
-  );
+  const currentPage = query.page ? query.page : 1;
+
+  const startPage = Math.floor((Number(currentPage) - 1) / 10) * 10 + 1;
+
   useEffect(() => {
+    const pagenationNum = Math.min(
+      10,
+      Math.ceil(articleCouts / pagePerPagenation) - startPage + 1
+    );
+
     const newPagenationList = [...Array(pagenationNum).keys()].map(
       (i) => i + startPage
     );
@@ -36,12 +45,6 @@ export default function Pagenation({
     setpagenationList(newPagenationList);
   }, [articleCouts]);
 
-  const handleClickPage = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    const element = event.target as HTMLElement;
-    setCurrentPage(Number(element.innerText));
-  };
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
@@ -71,7 +74,6 @@ export default function Pagenation({
       <ul className="pagenation" aria-label="pagenation">
         <li className="page-item">
           <a onClick={handleClick} id="pre" className="page-link">
-            {" "}
             ◀
           </a>
         </li>
@@ -96,7 +98,6 @@ export default function Pagenation({
         ))}
         <li className="page-item">
           <a onClick={handleClick} id="nxt" className="page-link">
-            {" "}
             ▶
           </a>
         </li>

@@ -9,7 +9,6 @@ import { AnyAction } from "redux";
 const rootReducer = combineReducers({
   article,
   user,
-  server,
 });
 // const configureStore = (context) => {
 //   console.log(context);

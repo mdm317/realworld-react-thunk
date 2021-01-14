@@ -12,7 +12,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import { GetArticleCondition } from "../Api/article";
-import GlobalArticleList from "../Component/GlobalArticleList";
+import ArticleBoxGlobal from "../Component/ArticleBoxGlobal";
 import Pagenation from "../Component/Pagenation";
 import { RootState } from "../Redux";
 
@@ -24,21 +24,15 @@ export default function Home(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
   const history = useHistory();
-  // const articleIsLoading = useSelector(
-  //   (state: RootState) => state.article.articleIsLoading
-  // );
+  const location = useLocation();
+
+  // 새로고침시 url 을 기억못함 하게 하는 방법은?
   useEffect(() => {
-    history.push(`${match.url}?page=1`);
+    if (!location.search) {
+      history.push(`${match.url}?page=1`);
+    }
   }, []);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [
-    getArticleCondition,
-    setarticleCondition,
-  ] = useState<GetArticleCondition>({ limit: pagePerPagenation });
-  useEffect(() => {
-    const offset = (currentPage - 1) * pagePerPagenation;
-    setarticleCondition({ ...getArticleCondition, offset });
-  }, [currentPage]);
+
   return (
     <div className="home-page">
       <div className="banner">
@@ -82,12 +76,7 @@ export default function Home(): JSX.Element {
                 path={`${match.url}`}
                 render={() => (
                   <>
-                    <GlobalArticleList pagePerPagenation={pagePerPagenation} />
-                    <Pagenation
-                      setCurrentPage={setCurrentPage}
-                      currentPage={currentPage}
-                      pagePerPagenation={pagePerPagenation}
-                    />
+                    <ArticleBoxGlobal pagePerPagenation={pagePerPagenation} />
                   </>
                 )}
               />

@@ -16,8 +16,8 @@ export default function ArticleList({
           <li className="article-preview" key={article.slug}>
             <UserMeta article={article}></UserMeta>
             <a href="/article/detail" className="preview-link">
-              <h1>{article.title}</h1>
-              <p> {article.description}</p>
+              <h1>{article.title.slice(0, 50)}</h1>
+              <p> {article.description.slice(0, 100)}</p>
               <span>Read more...</span>
             </a>
           </li>
