@@ -1,4 +1,4 @@
-import { Article } from "../src/db";
+import { Article } from "../../src/db";
 
 interface ResponseArticle {
   articles: Article[];
@@ -94,7 +94,7 @@ export const responseArticleListLimit5: ResponseArticle = {
   ],
   articlesCount: 500,
 };
-export const responseArticleListCounts40: ResponseArticle = {
+export const articlesFakeResponse: ResponseArticle = {
   articles: [
     {
       slug: "how-to-train-your-dragon",
@@ -107,7 +107,7 @@ export const responseArticleListCounts40: ResponseArticle = {
       favorited: false,
       favoritesCount: 0,
       author: {
-        username: "jake",
+        username: "nake",
         bio: "I work at statefarm",
         image: "https://i.stack.imgur.com/xHWG8.jpg",
         following: false,
@@ -124,7 +124,7 @@ export const responseArticleListCounts40: ResponseArticle = {
       favorited: false,
       favoritesCount: 0,
       author: {
-        username: "jake",
+        username: "nake",
         bio: "I work at statefarm",
         image: "https://i.stack.imgur.com/xHWG8.jpg",
         following: false,
@@ -141,7 +141,7 @@ export const responseArticleListCounts40: ResponseArticle = {
       favorited: false,
       favoritesCount: 0,
       author: {
-        username: "jake",
+        username: "nake",
         bio: "I work at statefarm",
         image: "https://i.stack.imgur.com/xHWG8.jpg",
         following: false,
@@ -158,7 +158,7 @@ export const responseArticleListCounts40: ResponseArticle = {
       favorited: false,
       favoritesCount: 0,
       author: {
-        username: "jake",
+        username: "nake",
         bio: "I work at statefarm",
         image: "https://i.stack.imgur.com/xHWG8.jpg",
         following: false,
@@ -175,7 +175,7 @@ export const responseArticleListCounts40: ResponseArticle = {
       favorited: false,
       favoritesCount: 0,
       author: {
-        username: "jake",
+        username: "nake",
         bio: "I work at statefarm",
         image: "https://i.stack.imgur.com/xHWG8.jpg",
         following: false,
@@ -184,7 +184,7 @@ export const responseArticleListCounts40: ResponseArticle = {
   ],
   articlesCount: 40,
 };
-export const responseArticleOffset30 = {
+export const articlesOffsetFakeResponse = {
   articles: [
     {
       slug: "how-to-train-your-dragon page 7",

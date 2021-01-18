@@ -17,13 +17,25 @@ export const getArticleListAPI = async (
   const tagQuery = payload.tag ? `tag=${payload.tag}&` : "";
   const offsetQuery = payload.offset ? `offset=${payload.offset}&` : "";
   const limitQuery = payload.limit ? `limit=${payload.limit}&` : "";
-  const author = payload.username ? `author=${payload.username}&` : "";
+  const author = payload.author ? `author=${payload.author}&` : "";
   const favorited = payload.favorited ? `favorited=${payload.favorited}&` : "";
   const token = getToken();
   const header: { headers?: { Authorization: string } } = {};
   if (token) {
     header.headers = { Authorization: `Token ${token}` };
   }
+
+  // console.log(
+  //   "called url ",
+  //   url +
+  //     "/articles?" +
+  //     tagQuery +
+  //     offsetQuery +
+  //     limitQuery +
+  //     author +
+  //     favorited
+  // );
+
   const response = await axios.get(
     url +
       "/articles?" +

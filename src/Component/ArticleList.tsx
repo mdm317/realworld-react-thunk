@@ -21,9 +21,8 @@ export default function ArticleList({
               <span>Read more...</span>
             </a>
           </li>
-        ))}{" "}
+        ))}
       </ul>
-      )
     </>
   );
 }

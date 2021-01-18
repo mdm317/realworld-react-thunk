@@ -17,13 +17,12 @@ export interface Article {
   };
 }
 export interface User {
-  id: string;
   createdAt: string;
   updatedAt: string;
   email: string;
   username: string;
   bio: string;
-  image: boolean;
+  image: string;
 }
 export interface LoginUser extends User {
   token: string;

@@ -30,7 +30,6 @@ export function loginThunk({
     dispatch(loginReqAction());
     try {
       const user = await loginAPI({ email, password });
-      storeToken(user.token);
       dispatch(loginSucAction(user));
       return user;
     } catch (e) {

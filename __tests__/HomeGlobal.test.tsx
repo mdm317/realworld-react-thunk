@@ -12,10 +12,7 @@ import { ToastContainer } from "react-toastify";
 import { createMemoryHistory } from "history";
 import { url } from "../src/db";
 
-import {
-  responseArticleListLimit5,
-  responseArticleListCounts40,
-} from "./api-response";
+import { responseArticleListLimit5 } from "./ApiResponse/article";
 const pagePerPagenation = 5;
 const server = setupServer();
 
@@ -47,7 +44,7 @@ function renderWithProvidersAndToast(component: JSX.Element) {
   );
 }
 
-test("5개의 article preview 가 화면에표시되어야한다.", async () => {
+test("처음에는 5개의 article preview 가 화면에표시되어야한다.", async () => {
   const articleList = responseArticleListLimit5.articles;
 
   const history = createMemoryHistory();

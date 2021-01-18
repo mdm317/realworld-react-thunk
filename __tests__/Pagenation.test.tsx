@@ -8,10 +8,7 @@ import { storeToken } from "../src/Jwt/jwt";
 import { getArticleList } from "../src/Thunk/article";
 import { getArticleListSuccessAction } from "../src/Redux/Article/action";
 import { createMemoryHistory } from "history";
-import {
-  responseArticleListLimit5,
-  responseArticleListCounts40,
-} from "./api-response";
+import { articlesFakeResponse } from "./ApiResponse/article";
 import { ThunkDispatch } from "redux-thunk";
 
 import { rest } from "msw";
@@ -22,19 +19,6 @@ import { debug } from "webpack";
 import { ToastContainer } from "react-toastify";
 
 const pagePerPagenation = 5;
-
-const server = setupServer();
-
-beforeAll(() => {
-  server.listen();
-});
-beforeEach(() => {
-  server.use(
-    rest.get(url + `/articles?limit=${pagePerPagenation}&`, (req, res, ctx) => {
-      return res(ctx.json(responseArticleListCounts40));
-    })
-  );
-});
 
 function renderDefault(component: JSX.Element, store: any, history: any) {
   return render(
@@ -54,7 +38,7 @@ test(`40개 의 article 이 있을시 pagenation은
   //article 들을 불러옴
   (store.dispatch as any)(
     getArticleListSuccessAction({
-      articleList: responseArticleListLimit5.articles,
+      articleList: articlesFakeResponse.articles,
       articlesCount: 40,
     })
   );
@@ -80,7 +64,7 @@ test(`41개의 article 이 있을시 페이지네이션 개수는 11개여야하
   //article 들을 불러옴
   (store.dispatch as any)(
     getArticleListSuccessAction({
-      articleList: responseArticleListLimit5.articles,
+      articleList: articlesFakeResponse.articles,
       articlesCount: 41,
     })
   );
@@ -100,7 +84,7 @@ test(`41개의 article 이 있을시 페이지네이션 개수는 11개여야하
   //article 120개 일때
   (store.dispatch as any)(
     getArticleListSuccessAction({
-      articleList: responseArticleListLimit5.articles,
+      articleList: articlesFakeResponse.articles,
       articlesCount: 120,
     })
   );
@@ -126,7 +110,7 @@ test(`◀ 버튼 누를시 전 페이지네이션 없으면 에러메시지 나�
   //article 들을 불러옴
   (store.dispatch as any)(
     getArticleListSuccessAction({
-      articleList: responseArticleListLimit5.articles,
+      articleList: articlesFakeResponse.articles,
       articlesCount: 40,
     })
   );
@@ -158,7 +142,7 @@ test(`◀ 버튼 누를시 전 페이지네이션 있을시 전 페이지네이�
   //article 들을 불러옴
   (store.dispatch as any)(
     getArticleListSuccessAction({
-      articleList: responseArticleListLimit5.articles,
+      articleList: articlesFakeResponse.articles,
       articlesCount: 500,
     })
   );

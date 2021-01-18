@@ -5,26 +5,25 @@ import {
   Link,
   NavLink,
   Route,
-  Switch,
   useHistory,
   useLocation,
-  useParams,
   useRouteMatch,
 } from "react-router-dom";
-import { GetArticleCondition } from "../Api/article";
-import ArticleBoxGlobal from "../Component/ArticleBoxGlobal";
-import Pagenation from "../Component/Pagenation";
+import ArticleBoxGlobal from "../Component/ArticleBox/ArticleBoxGlobal";
+import ArticleBoxUserFeed from "../Component/ArticleBox/ArticleBoxUserFeed";
 import { RootState } from "../Redux";
 
-import NotFound from "./NotFound";
-
 // const pagePerPagenation = 5;
-
+function CusLink(username: string) {
+  const history = useHistory();
+  return <Link to="/userFeed/sdf">cuslInk</Link>;
+}
 export default function Home(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
   const history = useHistory();
   const location = useLocation();
+  const username = useSelector((state: RootState) => state.user.user?.username);
 
   // 새로고침시 url 을 기억못함 하게 하는 방법은?
   useEffect(() => {
@@ -32,7 +31,16 @@ export default function Home(): JSX.Element {
       history.push(`${match.url}?page=1`);
     }
   }, []);
+  const clickMyfeed = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    console.log(username);
 
+    if (username) {
+      history.push(`${match.url}` + "userFeed/" + username);
+    }
+  };
   return (
     <div className="home-page">
       <div className="banner">
@@ -49,34 +57,45 @@ export default function Home(): JSX.Element {
               <div className="feed-toggle">
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
-                    <NavLink
-                      activeClassName="active"
-                      className="nav-link "
-                      to={`${match.url}` + "yourfeed"}
-                    >
-                      Your Feed
-                    </NavLink>
-                    {/* <a className="nav-link disabled" href="">
-                      Your Feed
-                    </a> */}
+                    {username ? (
+                      <NavLink
+                        role="button"
+                        activeClassName="active"
+                        className="nav-link"
+                        to={`${match.url}` + "userFeed/" + username}
+                      >
+                        My Feed
+                      </NavLink>
+                    ) : (
+                      <div className="nav-link disabled"> My Feed</div>
+                    )}
                   </li>
-                  <li className="nav-item">
+                  {/* <li className="nav-item">
                     <NavLink
                       exact
                       activeClassName="active"
                       className="nav-link "
                       to={`${match.url}`}
                     >
-                      Global Feed
+                      My Feed
                     </NavLink>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
               <Route
+                exact
                 path={`${match.url}`}
                 render={() => (
                   <>
                     <ArticleBoxGlobal pagePerPagenation={pagePerPagenation} />
+                  </>
+                )}
+              />
+              <Route
+                path={`${match.url}userFeed/:author`}
+                render={() => (
+                  <>
+                    <ArticleBoxUserFeed pagePerPagenation={pagePerPagenation} />
                   </>
                 )}
               />

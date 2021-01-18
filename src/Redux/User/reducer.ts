@@ -25,11 +25,15 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
     isLodding: true,
     user: null,
   }),
-  LOGIN_SUCCESS: (state, action) => ({
-    ...state,
-    user: action.payload,
-    isLodding: false,
-  }),
+  LOGIN_SUCCESS: (state, action) => {
+    storeToken(action.payload.token);
+    return {
+      ...state,
+      user: action.payload,
+      isLodding: false,
+      isLogin: true,
+    };
+  },
   LOGIN_FAILURE: (state, action) => ({
     ...state,
     loginErr: action.payload,
