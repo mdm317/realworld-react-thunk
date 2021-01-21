@@ -34,3 +34,7 @@ export const signupFailAction = (errorMessage: AuthError) =>
     type: types.SIGNUP_FAILURE,
     payload: errorMessage,
   } as const);
+export const logOutSucAction = () =>
+  ({
+    type: types.LOGOUT_SUCCESS,
+  } as const);

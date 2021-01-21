@@ -93,9 +93,9 @@ test(`home 에서 my feed 버튼을 누르면 내가 쓴글들의
     name: /Article list/i,
   });
 
-  //articlepreview 가 5개 있어야된다
+  //articlepreview 가 5(pagePerPagenation)개 있어야된다
   const articleListElems = within(list).getAllByRole("listitem");
-  expect(articleListElems.length).toBe(5);
+  expect(articleListElems.length).toBe(pagePerPagenation);
 
   //각 articlepreview 는 제목과 내용이 화면에 있어야한다.
   articleListElems.forEach((articleElem, i) => {
@@ -140,9 +140,9 @@ test(`pagenation page 를 누르면 내가 쓴 글들의
     name: /Article list/i,
   });
 
-  //articlepreview 가 5개 있어야된다
+  //articlepreview 가 5(pagePerPagenation)개 있어야된다
   const articleListElems = within(list).getAllByRole("listitem");
-  expect(articleListElems.length).toBe(5);
+  expect(articleListElems.length).toBe(pagePerPagenation);
 
   const articleList = articlesOffsetFakeResponse.articles;
   //각 articlepreview 는 제목과 내용이 화면에 있어야한다.

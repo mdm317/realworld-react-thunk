@@ -1,10 +1,11 @@
 import { ThunkAction } from "redux-thunk";
-import { loginAPI, signupAPI } from "../Api/user";
+import { getCurrentUserAPI, loginAPI, logOutAPI, signupAPI } from "../Api/user";
 import { RootState } from "../Redux";
 import {
   loginFailAction,
   loginReqAction,
   loginSucAction,
+  logOutSucAction,
   signupFailAction,
   signupReqAction,
   signupSucAction,
@@ -14,6 +15,19 @@ import { LoginAction, SignupAction } from "../Redux/User/types";
 import { LoginUser } from "../db";
 import { storeToken } from "../Jwt/jwt";
 
+export function getCurrentUserThunk(
+  token: string
+): ThunkAction<void, RootState, null, LoginAction | ServerAction> {
+  return async (dispatch) => {
+    try {
+      const user = await getCurrentUserAPI(token);
+      dispatch(loginSucAction(user));
+    } catch (e) {
+      console.log("current user doesn't exit");
+      // throw Error("current user doesn't exit");
+    }
+  };
+}
 export function loginThunk({
   email,
   password,
@@ -63,5 +77,17 @@ export function signupThunk({
       }
       throw Error("Internal Server Error! Try rater!");
     }
+  };
+}
+
+export function logoutThunk(): ThunkAction<
+  void,
+  RootState,
+  null,
+  ReturnType<typeof logOutSucAction>
+> {
+  return (dispatch) => {
+    logOutAPI();
+    dispatch(logOutSucAction());
   };
 }

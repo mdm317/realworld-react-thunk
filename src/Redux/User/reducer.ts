@@ -55,5 +55,10 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
     signupErr: action.payload,
     isLodding: false,
   }),
+  LOGOUT_SUCCESS: (state) => ({
+    ...state,
+    isLogin: false,
+    user: null,
+  }),
 });
 export default userReducer;

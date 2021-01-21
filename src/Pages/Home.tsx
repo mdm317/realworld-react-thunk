@@ -70,16 +70,16 @@ export default function Home(): JSX.Element {
                       <div className="nav-link disabled"> My Feed</div>
                     )}
                   </li>
-                  {/* <li className="nav-item">
+                  <li className="nav-item">
                     <NavLink
                       exact
                       activeClassName="active"
                       className="nav-link "
                       to={`${match.url}`}
                     >
-                      My Feed
+                      Global Feed
                     </NavLink>
-                  </li> */}
+                  </li>
                 </ul>
               </div>
               <Route

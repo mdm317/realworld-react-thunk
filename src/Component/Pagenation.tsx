@@ -52,7 +52,7 @@ export default function Pagenation({
 
     if (element.id === "pre") {
       if (pagenationList[0] === 1) {
-        toast.info("이전 페이지가 없습니다.");
+        toast.error("이전 페이지가 없습니다.");
         return;
       }
       const newPagenationList = pagenationList.map((pageidx) => pageidx - 10);
@@ -62,7 +62,7 @@ export default function Pagenation({
         Math.ceil(articleCouts / pagePerPagenation) <=
         pagenationList[0] + 9
       ) {
-        toast.info("다음 페이지가 없습니다.");
+        toast.error("다음 페이지가 없습니다.");
         return;
       }
       const newPagenationList = pagenationList.map((pageidx) => pageidx + 10);

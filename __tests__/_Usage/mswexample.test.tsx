@@ -10,7 +10,9 @@ import React, { useEffect } from "react";
 const Hello = () => {
   useEffect(() => {
     axios
-      .get("https://conduit/url/test?id=123")
+      .get("https://conduit/url/test?id=123", {
+        headers: { Authorization: "Token 341" },
+      })
       .then((res) => {
         console.log(res.data);
         const h1 = document.querySelector("h1");
@@ -19,7 +21,7 @@ const Hello = () => {
         }
       })
       .catch((e: AxiosError) => {
-        console.log(e.message);
+        console.log("error", e.message);
       });
   }, []);
   return <h1>Hello</h1>;
@@ -38,6 +40,7 @@ beforeEach(() => {
       const id = req.url.searchParams.get("id");
       console.log("id", id);
 
+      console.log("req.headers", req.headers);
       return res(ctx.json("hi"));
     })
   );
