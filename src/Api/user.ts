@@ -1,6 +1,7 @@
+import axios from "axios";
 import Axios from "axios";
 import { LoginUser, url, User } from "../db";
-import { destroyToken } from "../Jwt/jwt";
+import { destroyToken, getToken } from "../Jwt/jwt";
 interface LoginPayload {
   email: string;
   password: string;
@@ -34,4 +35,17 @@ export const getCurrentUserAPI = async (token: string): Promise<LoginUser> => {
 };
 export const logOutAPI = (): void => {
   destroyToken();
+};
+export const favoriteAPI = async (slug: string) => {
+  const token = getToken();
+  const response = await axios.post(
+    url + `/articles/${slug}/favorite`,
+    {},
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
+  return response.data.article;
 };

@@ -21,7 +21,7 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { url } from "../src/db";
 import { destroyToken, storeToken } from "../src/Jwt/jwt";
-import { defaultRender } from "./util";
+import { renderDefault } from "./util";
 const server = setupServer();
 
 let history: History;
@@ -60,11 +60,12 @@ describe("렌더 될때 token 값으로 유저가 로그인 했는지를 알아�
     server.resetHandlers();
     destroyToken();
   });
+  afterAll(() => server.close());
   test(` 올바른 token을 주면 
   로그인 상태가 된다.`, async () => {
     storeToken(TOKEN);
 
-    const { store } = defaultRender(
+    const { store } = renderDefault(
       <Layout>
         <></>
       </Layout>
@@ -80,7 +81,7 @@ describe("렌더 될때 token 값으로 유저가 로그인 했는지를 알아�
     //잘못된 token을 건내준다.
     storeToken("WRONG TOKEN");
 
-    const { store } = defaultRender(
+    const { store } = renderDefault(
       <Layout>
         <></>
       </Layout>

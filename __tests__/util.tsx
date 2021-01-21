@@ -6,7 +6,7 @@ import { createMemoryHistory } from "history";
 import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
 
-export const defaultRender = (children: JSX.Element) => {
+export const renderDefault = (children: JSX.Element) => {
   const history = createMemoryHistory();
   const store = makeStore();
   const rendered = render(
