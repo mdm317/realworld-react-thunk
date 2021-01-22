@@ -4,6 +4,7 @@ export type GetArticleListType =
   | ReturnType<typeof action.getArticleListRequestAction>
   | ReturnType<typeof action.getArticleListSuccessAction>
   | ReturnType<typeof action.getArticleListFailureAction>;
+
 export type ArticleActionType = GetArticleListType;
 
 export const GET_ARTICLE_LIST_REQUEST = "GET_ARTICLE_LIST_REQUEST";

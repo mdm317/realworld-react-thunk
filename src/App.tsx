@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import Home from "./Pages/Home";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
+import SettingPost from "./Pages/SettingPost";
 import Layout from "./Component/Layout/Layout";
 
 export default function App(): JSX.Element {
@@ -23,6 +24,7 @@ export default function App(): JSX.Element {
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={SignUp} />
+            <Route path="/addPost" component={SettingPost} />
             <Route component={() => <h1>NOT FOUND</h1>} />
           </Switch>
         </Layout>

@@ -45,10 +45,20 @@ beforeEach(() => {
     })
   );
 });
-
-test("should ", async () => {
-  render(<Hello />);
-  expect(screen.getByText("Hello")).toBeVisible();
-  expect(await screen.findByText("hi")).toBeVisible();
-  // expect(await screen.findByText("alert")).toHaveTextContent("hi");
+const url = "https://conduit.productionready.io/api";
+// test("should ", async () => {
+//   render(<Hello />);
+//   expect(screen.getByText("Hello")).toBeVisible();
+//   expect(await screen.findByText("hi")).toBeVisible();
+//   // expect(await screen.findByText("alert")).toHaveTextContent("hi");
+// });
+test(" ", async () => {
+  server.use(
+    rest.get(url + "/articles", (req, res, ctx) => {
+      return res(ctx.json("hi"));
+    })
+  );
+  //시간초과가 남 404 를 줄순 없나?
+  const response = await axios.get(url + "/articles");
+  console.log(response.data);
 });

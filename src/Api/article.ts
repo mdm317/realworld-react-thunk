@@ -1,7 +1,8 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { Article, url } from "../db";
 import { getToken } from "../Jwt/jwt";
 import { ArticleListAndCount } from "../Redux/Article/action";
+import { AddPostApiProp } from "../types";
 
 export interface GetArticleCondition {
   tag?: string;
@@ -51,3 +52,29 @@ export const getArticleListAPI = async (
     articlesCount: response.data.articlesCount,
   };
 };
+export const addPostAPI = async (article: AddPostApiProp): Promise<Article> => {
+  const token = getToken();
+  const response = await axios.post(
+    url + "/articles",
+    { article },
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
+  return response.data.article;
+};
+
+export async function addPost(payload: AddPostApiProp): Promise<Article> {
+  try {
+    const article = await addPostAPI(payload);
+    return article;
+  } catch (e) {
+    if (e.response.status === 401) {
+      throw Error("You need to login!");
+    } else {
+      throw Error("Try it rater");
+    }
+  }
+}

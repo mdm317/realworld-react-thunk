@@ -30,7 +30,7 @@ export default function Header(): JSX.Element {
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
-                  to="/addpost"
+                  to="/addPost"
                   className="nav-link"
                 >
                   New Post

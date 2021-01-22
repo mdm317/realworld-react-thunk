@@ -2,7 +2,13 @@ import { ThunkAction } from "redux-thunk";
 import { RootState } from "../Redux";
 import { GetArticleListType } from "../Redux/Article/types";
 import * as actions from "../Redux/Article/action";
-import { GetArticleCondition, getArticleListAPI } from "../Api/article";
+import {
+  addPostAPI,
+  GetArticleCondition,
+  getArticleListAPI,
+} from "../Api/article";
+import { AddPostApiProp } from "../types";
+import { Article } from "../db";
 
 export function getArticleList(
   payload: GetArticleCondition

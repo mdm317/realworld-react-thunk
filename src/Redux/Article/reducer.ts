@@ -1,5 +1,6 @@
 import * as types from "./types";
 import { Article } from "../../db";
+import ArticleList from "../../Component/ArticleList";
 interface ArticleState {
   articleList: Article[] | null;
   articlesCounts: number;
