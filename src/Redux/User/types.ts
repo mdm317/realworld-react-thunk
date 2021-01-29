@@ -9,6 +9,7 @@ export type SignupAction =
   | ReturnType<typeof actions.signupReqAction>
   | ReturnType<typeof actions.signupSucAction>
   | ReturnType<typeof actions.signupFailAction>;
+
 export type UserActionType = LoginAction | SignupAction;
 
 export const LOGIN_REQUEST = "LOGIN_REQUEST";

@@ -8,7 +8,7 @@ import { Router } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "@testing-library/jest-dom";
 import { loginSucAction } from "../src/Redux/User/action";
-import { fakeUserResponse } from "./ApiResponse/user";
+import { userFakeResponse } from "./ApiResponse/user";
 import { History } from "history";
 
 let history: History;
@@ -35,7 +35,7 @@ test("비로그인시 home signup 링크만 보여야 한다. ", () => {
 });
 
 test("로그인시 new post ,log out, home,setting 만 보여야한다 . ", async () => {
-  const user = fakeUserResponse.user;
+  const user = userFakeResponse.user;
   store.dispatch(loginSucAction(user));
   expect(await screen.findByText(/new post/i)).toBeVisible();
   expect(await screen.findByText(/log out/i)).toBeVisible();

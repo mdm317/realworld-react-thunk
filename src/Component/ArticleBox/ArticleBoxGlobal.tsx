@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useRouteMatch } from "react-router-dom";
 import { GetArticleCondition } from "../../Api/article";
 import { getArticleList } from "../../Thunk/article";
-import ArticleList from "./../ArticleList";
+import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
 import Pagenation from "../Pagenation";

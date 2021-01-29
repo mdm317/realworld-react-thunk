@@ -1,4 +1,4 @@
-export const fakeUserResponse = {
+export const userFakeResponse = {
   user: {
     email: "gpffh@a.a",
     createdAt: "2020-11-24T07:00:04.578Z",

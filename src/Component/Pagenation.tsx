@@ -81,7 +81,7 @@ export default function Pagenation({
           <li
             key={page}
             className={`page-item +' '+ ${
-              page === Number(query.page) ? "active" : ""
+              page === Number(currentPage) ? "active" : ""
             }`}
           >
             {/* <Link to={{ pathname: '/foo', query: { the: 'query' } }}/> */}

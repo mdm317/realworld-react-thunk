@@ -5,14 +5,14 @@ import { LoginUser, User } from "../../db";
 
 interface UserState {
   isLogin: boolean;
-  user: LoginUser | null;
+  user: LoginUser | undefined;
   loginErr: actions.AuthError | null;
   signupErr: actions.AuthError | null;
   isLodding: boolean;
 }
 const initialState: UserState = {
   isLogin: false,
-  user: null,
+  user: undefined,
   loginErr: null,
   signupErr: null,
   isLodding: false,
@@ -23,7 +23,7 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
     ...state,
     loginErr: null,
     isLodding: true,
-    user: null,
+    user: undefined,
   }),
   LOGIN_SUCCESS: (state, action) => {
     storeToken(action.payload.token);
@@ -43,7 +43,7 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
     ...state,
     signupErr: null,
     isLodding: true,
-    user: null,
+    user: undefined,
   }),
   SIGNUP_SUCCESS: (state, action) => ({
     ...state,
@@ -58,7 +58,7 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
   LOGOUT_SUCCESS: (state) => ({
     ...state,
     isLogin: false,
-    user: null,
+    user: undefined,
   }),
 });
 export default userReducer;

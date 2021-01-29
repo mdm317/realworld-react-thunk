@@ -21,26 +21,8 @@ function CusLink(username: string) {
 export default function Home(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
-  const history = useHistory();
-  const location = useLocation();
   const username = useSelector((state: RootState) => state.user.user?.username);
 
-  // 새로고침시 url 을 기억못함 하게 하는 방법은?
-  useEffect(() => {
-    if (!location.search) {
-      history.push(`${match.url}?page=1`);
-    }
-  }, []);
-  const clickMyfeed = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    console.log(username);
-
-    if (username) {
-      history.push(`${match.url}` + "userFeed/" + username);
-    }
-  };
   return (
     <div className="home-page">
       <div className="banner">

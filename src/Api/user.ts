@@ -33,13 +33,24 @@ export const getCurrentUserAPI = async (token: string): Promise<LoginUser> => {
   });
   return response.data.user;
 };
+export const getProfileAPI = async (username: string) => {
+  const token = getToken();
+  const header: { headers?: { Authorization: string } } = {};
+  if (token) {
+    header.headers = { Authorization: `Token ${token}` };
+  }
+  const response = await Axios.get(url + `/profiles/${username}`, header);
+  return response.data.profile;
+};
 export const logOutAPI = (): void => {
   destroyToken();
 };
-export const favoriteAPI = async (slug: string) => {
+
+export const followAPI = async (username: string) => {
+  //POST /api/profiles/:username/follow
   const token = getToken();
   const response = await axios.post(
-    url + `/articles/${slug}/favorite`,
+    url + `/profiles/${username}/follow`,
     {},
     {
       headers: {
@@ -48,4 +59,22 @@ export const favoriteAPI = async (slug: string) => {
     }
   );
   return response.data.article;
+};
+//ELETE /api/profiles/:username/follow
+export const unfollowAPI = async (username: string) => {
+  //POST /api/profiles/:username/follow
+  const token = getToken();
+  const response = await axios.delete(url + `/profiles/${username}/follow`, {
+    headers: {
+      Authorization: `Token ${token}`,
+    },
+  });
+  return response.data.article;
+};
+
+export const toggleFollow = async (username: string, isFollow: boolean) => {
+  if (isFollow) {
+    return unfollowAPI(username);
+  }
+  return followAPI(username);
 };

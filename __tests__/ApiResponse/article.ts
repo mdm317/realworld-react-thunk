@@ -279,7 +279,8 @@ export const articleFakeResponse = {
     slug: "how-to-train-your-dragon",
     title: "How to train your dragon",
     description: "Ever wonder how?",
-    body: "It takes a Jacobian",
+    body:
+      "* App\n   * Home\n      *  ArticleBoxUserFeed\n#### sdfsadf\n### sdfsadfsdf\n## sadfasdf",
     tagList: ["dragons", "training"],
     createdAt: "2016-02-18T03:22:56.637Z",
     updatedAt: "2016-02-18T03:48:35.824Z",

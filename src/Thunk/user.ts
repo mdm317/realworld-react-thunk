@@ -1,5 +1,11 @@
 import { ThunkAction } from "redux-thunk";
-import { getCurrentUserAPI, loginAPI, logOutAPI, signupAPI } from "../Api/user";
+import {
+  getCurrentUserAPI,
+  getProfileAPI,
+  loginAPI,
+  logOutAPI,
+  signupAPI,
+} from "../Api/user";
 import { RootState } from "../Redux";
 import {
   loginFailAction,

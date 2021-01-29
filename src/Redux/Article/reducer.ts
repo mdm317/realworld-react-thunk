@@ -1,19 +1,22 @@
 import * as types from "./types";
-import { Article } from "../../db";
+import { Article, Comment } from "../../db";
 import ArticleList from "../../Component/ArticleList";
+import ArticleDetail from "../../Pages/ArticleDetail";
 interface ArticleState {
   articleList: Article[] | null;
   articlesCounts: number;
   articleDetail: Article | null;
-  articleIsLoading: boolean;
+  articleListIsLoading: boolean;
   serverErr: null | string;
+  comments: Comment[];
 }
 const initialState: ArticleState = {
   articleList: null,
   articlesCounts: 0,
   articleDetail: null,
-  articleIsLoading: false,
+  articleListIsLoading: false,
   serverErr: null,
+  comments: [],
 };
 const articleReducer = (
   state = initialState,
@@ -24,21 +27,52 @@ const articleReducer = (
       return {
         ...state,
         articleList: null,
-        articleIsLoading: true,
+        articleListIsLoading: true,
       };
     case types.GET_ARTICLE_LIST_SUCCESS:
       return {
         ...state,
         articlesCounts: action.payload.articlesCount,
         articleList: action.payload.articleList,
-        articleIsLoading: false,
+        articleListIsLoading: false,
       };
     case types.GET_ARTICLE_LIST_FAILURE:
       return {
         ...state,
-        articleIsLoading: false,
-        serverErr: action.payload,
       };
+    case types.GET_ARTICLE_REQUEST:
+      return { ...state, articleDetail: null };
+    case types.GET_ARTICLE_SUCCESS:
+      return { ...state, articleDetail: action.payload };
+    case types.GET_COMMENTS_REQUEST:
+      return { ...state, comments: [] };
+    case types.GET_COMMENTS_SUCCESS:
+      return { ...state, comments: action.payload };
+    case types.ADD_COMMENT_SUCCESS: {
+      const newComment = [action.payload, ...state.comments];
+      return { ...state, comments: newComment };
+    }
+    case types.DELETE_COMMENT_SUCCESS: {
+      const newComment = state.comments.filter(
+        (comment) => comment.id !== Number(action.payload)
+      );
+      return { ...state, comments: newComment };
+    }
+    case types.TOGGLE_ARTICLE_FOLLOW: {
+      if (state.articleDetail) {
+        const currentFollow = state.articleDetail.author.following;
+        //spread 를 안쓴다면????  ==> return 을 안쓰고 변하게 한다면???
+        //주소가 같으니까 변경 적용이 안되나????/
+        // const newArticleDetail: Article =  ...state.articleDetail ;
+        const newArticleDetail: Article = { ...state.articleDetail };
+        newArticleDetail.author.following = !currentFollow;
+        return {
+          ...state,
+          articleDetail: newArticleDetail,
+        };
+      }
+      return { ...state };
+    }
     default:
       return { ...state };
   }

@@ -27,3 +27,18 @@ export interface User {
 export interface LoginUser extends User {
   token: string;
 }
+export interface Comment {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  body: string;
+  author: {
+    username: string;
+    bio: string;
+    image: string;
+    following: boolean;
+  };
+}
+
+export const defaultImage =
+  "https://static.productionready.io/images/smiley-cyrus.jpg";
