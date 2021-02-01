@@ -2,6 +2,7 @@ import axios from "axios";
 import Axios from "axios";
 import { LoginUser, url, User } from "../db";
 import { destroyToken, getToken } from "../Jwt/jwt";
+import { UpdateUserProp } from "../types";
 interface LoginPayload {
   email: string;
   password: string;
@@ -77,4 +78,20 @@ export const toggleFollow = async (username: string, isFollow: boolean) => {
     return unfollowAPI(username);
   }
   return followAPI(username);
+};
+
+export const updateUserAPI = async (
+  user: UpdateUserProp
+): Promise<LoginUser> => {
+  const token = getToken();
+  const response = await axios.put(
+    url + "/user",
+    { user },
+    {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    }
+  );
+  return response.data.user;
 };

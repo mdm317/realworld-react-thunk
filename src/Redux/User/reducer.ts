@@ -9,6 +9,7 @@ interface UserState {
   loginErr: actions.AuthError | null;
   signupErr: actions.AuthError | null;
   isLodding: boolean;
+  updateUserErr: actions.AuthError | null;
 }
 const initialState: UserState = {
   isLogin: false,
@@ -16,6 +17,7 @@ const initialState: UserState = {
   loginErr: null,
   signupErr: null,
   isLodding: false,
+  updateUserErr: null,
 };
 export type UserAction = ActionType<typeof actions>;
 const userReducer = createReducer<UserState, UserAction>(initialState, {
@@ -59,6 +61,18 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
     ...state,
     isLogin: false,
     user: undefined,
+  }),
+  UPDATE_USER_REQUEST: (state) => ({
+    ...state,
+    updateUserErr: null,
+  }),
+  UPDATE_USER_SUCCESS: (state, action) => ({
+    ...state,
+    user: action.payload,
+  }),
+  UPDATE_USER_FAILURE: (state, action) => ({
+    ...state,
+    updateUserErr: action.payload,
   }),
 });
 export default userReducer;

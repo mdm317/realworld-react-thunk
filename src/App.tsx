@@ -17,6 +17,7 @@ import SettingPost from "./Pages/SettingPost";
 import Layout from "./Component/Layout/Layout";
 import ArticleDetail from "./Pages/ArticleDetail";
 import history from "./history";
+import SettingUser from "./Pages/SettingUser";
 export default function App(): JSX.Element {
   return (
     <>
@@ -25,6 +26,7 @@ export default function App(): JSX.Element {
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
+            <Route path="/setting" component={SettingUser} />
             <Route path="/signup" component={SignUp} />
             <Route path="/addPost" component={SettingPost} />
             <Route path="/article/edit/:slug" component={SettingPost} />

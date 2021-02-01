@@ -20,6 +20,7 @@ export default function Input({
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setvalue((event.target as HTMLInputElement).value);
   };
+
   return (
     <input
       placeholder={placeholder}
@@ -29,6 +30,6 @@ export default function Input({
       id={id}
       type={type}
       className={className}
-    ></input>
+    />
   );
 }

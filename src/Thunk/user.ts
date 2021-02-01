@@ -5,6 +5,7 @@ import {
   loginAPI,
   logOutAPI,
   signupAPI,
+  updateUserAPI,
 } from "../Api/user";
 import { RootState } from "../Redux";
 import {
@@ -15,11 +16,14 @@ import {
   signupFailAction,
   signupReqAction,
   signupSucAction,
+  updateUserFailAction,
+  updateUserSucAction,
 } from "../Redux/User/action";
 import { ServerAction } from "../Redux/Server/reducer";
-import { LoginAction, SignupAction } from "../Redux/User/types";
+import { LoginAction, SignupAction, UpdateAction } from "../Redux/User/types";
 import { LoginUser } from "../db";
 import { storeToken } from "../Jwt/jwt";
+import { UpdateUserProp } from "../types";
 
 export function getCurrentUserThunk(
   token: string
@@ -95,5 +99,23 @@ export function logoutThunk(): ThunkAction<
   return (dispatch) => {
     logOutAPI();
     dispatch(logOutSucAction());
+  };
+}
+
+export function updateUserThunk(
+  user: UpdateUserProp
+): ThunkAction<Promise<LoginUser>, RootState, null, UpdateAction> {
+  return async (dispatch) => {
+    try {
+      const newUser = await updateUserAPI(user);
+      dispatch(updateUserSucAction(newUser));
+      return newUser;
+    } catch (e) {
+      if (e.response && e.response.data && e.response.data.errors) {
+        dispatch(updateUserFailAction(e.response.data.errors));
+        throw Error("Check error message");
+      }
+      throw Error("try rater!");
+    }
   };
 }
