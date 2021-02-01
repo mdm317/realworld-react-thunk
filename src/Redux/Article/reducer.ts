@@ -5,6 +5,9 @@ import ArticleDetail from "../../Pages/ArticleDetail";
 interface ArticleState {
   articleList: Article[] | null;
   articlesCounts: number;
+  userArticleList: Article[] | null;
+  userArticlesCounts: number;
+  userArticlesLoading: boolean;
   articleDetail: Article | null;
   articleListIsLoading: boolean;
   serverErr: null | string;
@@ -13,6 +16,9 @@ interface ArticleState {
 const initialState: ArticleState = {
   articleList: null,
   articlesCounts: 0,
+  userArticleList: null,
+  userArticlesCounts: 0,
+  userArticlesLoading: false,
   articleDetail: null,
   articleListIsLoading: false,
   serverErr: null,
@@ -39,6 +45,25 @@ const articleReducer = (
     case types.GET_ARTICLE_LIST_FAILURE:
       return {
         ...state,
+        articleListIsLoading: false,
+      };
+    case types.GET_USER_ARTICLES_REQUEST:
+      return {
+        ...state,
+        userArticleList: null,
+        userArticlesLoading: true,
+      };
+    case types.GET_USER_ARTICLES_SUCCESS:
+      return {
+        ...state,
+        userArticlesCounts: action.payload.articlesCount,
+        userArticleList: action.payload.articleList,
+        userArticlesLoading: false,
+      };
+    case types.GET_USER_ARTICLES_FAILURE:
+      return {
+        ...state,
+        userArticlesLoading: false,
       };
     case types.GET_ARTICLE_REQUEST:
       return { ...state, articleDetail: null };

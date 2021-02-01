@@ -18,6 +18,7 @@ import Layout from "./Component/Layout/Layout";
 import ArticleDetail from "./Pages/ArticleDetail";
 import history from "./history";
 import SettingUser from "./Pages/SettingUser";
+import Profile from "./Pages/Profile";
 export default function App(): JSX.Element {
   return (
     <>
@@ -31,6 +32,7 @@ export default function App(): JSX.Element {
             <Route path="/addPost" component={SettingPost} />
             <Route path="/article/edit/:slug" component={SettingPost} />
             <Route path="/article/:slug" component={ArticleDetail} />
+            <Route path="/profile/:username" component={Profile} />
             <Route component={() => <h1>NOT FOUND</h1>} />
           </Switch>
         </Layout>

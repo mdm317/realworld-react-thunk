@@ -24,6 +24,23 @@ export const getArticleListFailureAction = () =>
     type: types.GET_ARTICLE_LIST_FAILURE,
   } as const);
 
+export const getUserArticleListRequestAction = () =>
+  ({
+    type: types.GET_USER_ARTICLES_REQUEST,
+  } as const);
+
+export const getUserArticleListSuccessAction = (
+  articleListAndCount: ArticleListAndCount
+) =>
+  ({
+    type: types.GET_USER_ARTICLES_SUCCESS,
+    payload: articleListAndCount,
+  } as const);
+export const getUserArticleListFailureAction = () =>
+  ({
+    type: types.GET_USER_ARTICLES_FAILURE,
+  } as const);
+
 export const getArticleRequestAction = () =>
   ({
     type: types.GET_ARTICLE_REQUEST,

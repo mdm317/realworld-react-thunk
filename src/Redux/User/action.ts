@@ -1,5 +1,5 @@
 import * as types from "./types";
-import { LoginUser, User } from "../../db";
+import { LoginUser, Profile, User } from "../../db";
 export interface AuthError {
   username?: [string];
   email?: [string];
@@ -53,4 +53,19 @@ export const updateUserFailAction = (errorMessage: AuthError) =>
   ({
     type: types.UPDATE_USER_FAILURE,
     payload: errorMessage,
+  } as const);
+export const getProfileReqAction = () =>
+  ({
+    type: types.GET_PROFILE_REQUEST,
+  } as const);
+
+export const getProfileSucAction = (Profile: Profile) =>
+  ({
+    type: types.GET_PROFILE_SUCCESS,
+    payload: Profile,
+  } as const);
+
+export const getProfileFailAction = () =>
+  ({
+    type: types.GET_PROFILE_FAILURE,
   } as const);

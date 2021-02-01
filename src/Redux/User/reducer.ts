@@ -1,11 +1,12 @@
 import { ActionType, createReducer } from "typesafe-actions";
 import * as actions from "./action";
 import { storeToken } from "../../Jwt/jwt";
-import { LoginUser, User } from "../../db";
+import { LoginUser, Profile, User } from "../../db";
 
 interface UserState {
   isLogin: boolean;
   user: LoginUser | undefined;
+  profile: Profile | undefined;
   loginErr: actions.AuthError | null;
   signupErr: actions.AuthError | null;
   isLodding: boolean;
@@ -18,6 +19,7 @@ const initialState: UserState = {
   signupErr: null,
   isLodding: false,
   updateUserErr: null,
+  profile: undefined,
 };
 export type UserAction = ActionType<typeof actions>;
 const userReducer = createReducer<UserState, UserAction>(initialState, {
@@ -73,6 +75,14 @@ const userReducer = createReducer<UserState, UserAction>(initialState, {
   UPDATE_USER_FAILURE: (state, action) => ({
     ...state,
     updateUserErr: action.payload,
+  }),
+  GET_PROFILE_REQUEST: (state) => ({
+    ...state,
+    profile: undefined,
+  }),
+  GET_PROFILE_SUCCESS: (state, action) => ({
+    ...state,
+    profile: action.payload,
   }),
 });
 export default userReducer;

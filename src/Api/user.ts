@@ -59,7 +59,8 @@ export const followAPI = async (username: string) => {
       },
     }
   );
-  return response.data.article;
+
+  return response.data.profile;
 };
 //ELETE /api/profiles/:username/follow
 export const unfollowAPI = async (username: string) => {

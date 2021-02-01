@@ -9,6 +9,9 @@ import {
 } from "../Api/user";
 import { RootState } from "../Redux";
 import {
+  getProfileFailAction,
+  getProfileReqAction,
+  getProfileSucAction,
   loginFailAction,
   loginReqAction,
   loginSucAction,
@@ -20,7 +23,12 @@ import {
   updateUserSucAction,
 } from "../Redux/User/action";
 import { ServerAction } from "../Redux/Server/reducer";
-import { LoginAction, SignupAction, UpdateAction } from "../Redux/User/types";
+import {
+  GetProfileAction,
+  LoginAction,
+  SignupAction,
+  UpdateAction,
+} from "../Redux/User/types";
 import { LoginUser } from "../db";
 import { storeToken } from "../Jwt/jwt";
 import { UpdateUserProp } from "../types";
@@ -115,6 +123,22 @@ export function updateUserThunk(
         dispatch(updateUserFailAction(e.response.data.errors));
         throw Error("Check error message");
       }
+      throw Error("try rater!");
+    }
+  };
+}
+
+export function getProfileThunk(
+  username: string
+): ThunkAction<Promise<void>, RootState, null, GetProfileAction> {
+  return async (dispatch) => {
+    dispatch(getProfileReqAction());
+    try {
+      const profile = await getProfileAPI(username);
+      dispatch(getProfileSucAction(profile));
+      return;
+    } catch (e) {
+      dispatch(getProfileFailAction());
       throw Error("try rater!");
     }
   };

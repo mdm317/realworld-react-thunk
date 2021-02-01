@@ -19,6 +19,9 @@ export default function ArticleBoxGlobal({
   const articleList = useSelector(
     (state: RootState) => state.article.articleList
   );
+  const articleCouts = useSelector(
+    (state: RootState) => state.article.articlesCounts
+  );
   useEffect(() => {
     const query = queryString.parse(location.search);
     const currentPage = query.page;
@@ -30,6 +33,7 @@ export default function ArticleBoxGlobal({
       const offset = (pageNum - 1) * pagePerPagenation;
       getArticleCondition.offset = offset;
     }
+    // console.log("article global");
 
     dispatch(getArticleList(getArticleCondition));
   }, [location]);
@@ -41,7 +45,10 @@ export default function ArticleBoxGlobal({
       {articleList && articleList.length > 0 && (
         <>
           <ArticleList articleList={articleList} />
-          <Pagenation pagePerPagenation={pagePerPagenation} />
+          <Pagenation
+            pagePerPagenation={pagePerPagenation}
+            articleCouts={articleCouts}
+          />
         </>
       )}
     </>

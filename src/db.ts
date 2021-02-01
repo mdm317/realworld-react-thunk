@@ -39,6 +39,11 @@ export interface Comment {
     following: boolean;
   };
 }
-
+export interface Profile {
+  username: string;
+  bio: string;
+  image: string;
+  following: boolean;
+}
 export const defaultImage =
   "https://static.productionready.io/images/smiley-cyrus.jpg";

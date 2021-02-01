@@ -74,7 +74,7 @@ export default function Home(): JSX.Element {
                 )}
               />
               <Route
-                path={`${match.url}userFeed/:author`}
+                path={`${match.url}userFeed/:username`}
                 render={() => (
                   <>
                     <ArticleBoxUserFeed pagePerPagenation={pagePerPagenation} />

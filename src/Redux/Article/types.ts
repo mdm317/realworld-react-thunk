@@ -6,6 +6,11 @@ export type GetArticleListType =
   | ReturnType<typeof action.getArticleListSuccessAction>
   | ReturnType<typeof action.getArticleListFailureAction>;
 
+export type GetUserArticleListType =
+  | ReturnType<typeof action.getUserArticleListRequestAction>
+  | ReturnType<typeof action.getUserArticleListSuccessAction>
+  | ReturnType<typeof action.getUserArticleListFailureAction>;
+
 export type GetArticleType =
   | ReturnType<typeof action.getArticleRequestAction>
   | ReturnType<typeof action.getArticleSuccessAction>
@@ -30,7 +35,8 @@ export type ArticleActionType =
   | GetCommentsType
   | AddCommentType
   | DeleteCommentType
-  | ToggleFollowType;
+  | ToggleFollowType
+  | GetUserArticleListType;
 
 export const GET_ARTICLE_LIST_REQUEST = "GET_ARTICLE_LIST_REQUEST";
 export const GET_ARTICLE_LIST_SUCCESS = "GET_ARTICLE_LIST_SUCCESS";
@@ -47,3 +53,7 @@ export const GET_COMMENTS_FAILURE = "GET_COMMENTS_FAILURE";
 export const ADD_COMMENT_SUCCESS = "ADD_COMMENT_SUCCESS";
 export const DELETE_COMMENT_SUCCESS = "DELETE_COMMENT_SUCCESS";
 export const TOGGLE_ARTICLE_FOLLOW = "TOGGLE_ARTICLE_FOLLOW";
+
+export const GET_USER_ARTICLES_REQUEST = "GET_USER_ARTICLES_REQUEST";
+export const GET_USER_ARTICLES_SUCCESS = "GET_USER_ARTICLES_SUCCESS";
+export const GET_USER_ARTICLES_FAILURE = "GET_USER_ARTICLES_FAILURE";

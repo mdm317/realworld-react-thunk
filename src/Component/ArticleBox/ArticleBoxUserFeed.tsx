@@ -1,8 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams, useRouteMatch } from "react-router-dom";
 import { GetArticleCondition } from "../../Api/article";
-import { getArticleList } from "../../Thunk/article";
+import { getArticleList, getUserArticleList } from "../../Thunk/article";
 import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
@@ -16,19 +16,23 @@ export default function ArticleBoxUserFeed({
 }: globalArticleListprop): JSX.Element {
   const dispatch = useDispatch();
   const location = useLocation();
-  const { author } = useParams<{ author: string }>();
-  // console.log(author);
+  const { username } = useParams<{ username: string }>();
+
+  // console.log("username", username);
   // console.log("location", location);
 
   useEffect(() => {
-    if (!author) {
+    if (!username) {
       return;
     }
     const query = queryString.parse(location.search);
+    // console.log("query", query);
+
     const currentPage = query.page;
+
     const getArticleCondition: GetArticleCondition = {
       limit: pagePerPagenation,
-      author,
+      author: username,
     };
     if (currentPage) {
       const pageNum = Number(currentPage);
@@ -37,23 +41,34 @@ export default function ArticleBoxUserFeed({
     }
     //limit 와 author 는 반드시 있어야 하고
     //offset 은 선택
-    dispatch(getArticleList(getArticleCondition));
-  }, [location, author]);
+    // console.log("article user");
+
+    dispatch(getUserArticleList(getArticleCondition));
+  }, [location, username]);
 
   const articleList = useSelector(
-    (state: RootState) => state.article.articleList
+    (state: RootState) => state.article.userArticleList
   );
-
+  const articleCouts = useSelector(
+    (state: RootState) => state.article.userArticlesCounts
+  );
+  if (!articleList) {
+    <h3>Is Loading...</h3>;
+  }
   return (
     <>
-      {articleList ? (
-        <>
-          <ArticleList articleList={articleList} />
-          <Pagenation pagePerPagenation={pagePerPagenation} />
-        </>
-      ) : (
-        <h3>Is Loading...</h3>
-      )}
+      {articleList &&
+        (articleList.length !== 0 ? (
+          <>
+            <ArticleList articleList={articleList} />
+            <Pagenation
+              pagePerPagenation={pagePerPagenation}
+              articleCouts={articleCouts}
+            />
+          </>
+        ) : (
+          <h1>No article here ...</h1>
+        ))}
     </>
   );
 }

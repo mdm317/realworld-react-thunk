@@ -15,7 +15,9 @@ export default function ArticleList({
     e.preventDefault();
     const slug = (e.currentTarget as HTMLElement).id;
     // console.log(slug);
-    history.push(`/article/${slug}`);
+    // console.log("history", history);
+
+    // history.push(`/article/${slug}`);
   };
   return (
     <>

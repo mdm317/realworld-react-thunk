@@ -6,6 +6,7 @@ import {
   GetArticleListType,
   GetArticleType,
   GetCommentsType,
+  GetUserArticleListType,
 } from "../Redux/Article/types";
 import * as actions from "../Redux/Article/action";
 import {
@@ -25,11 +26,32 @@ export function getArticleList(
   payload: GetArticleCondition
 ): ThunkAction<void, RootState, null, GetArticleListType> {
   return async (dispatch) => {
+    console.log("author", payload.author);
+
     dispatch(actions.getArticleListRequestAction());
     try {
       const articleListAndCount = await getArticleListAPI(payload);
+
       dispatch(actions.getArticleListSuccessAction(articleListAndCount));
     } catch (e) {
+      dispatch(actions.getArticleListFailureAction());
+
+      throw Error("Internal Server Error! Try rater!");
+    }
+  };
+}
+export function getUserArticleList(
+  payload: GetArticleCondition
+): ThunkAction<void, RootState, null, GetUserArticleListType> {
+  return async (dispatch) => {
+    dispatch(actions.getUserArticleListRequestAction());
+    try {
+      const articleListAndCount = await getArticleListAPI(payload);
+
+      dispatch(actions.getUserArticleListSuccessAction(articleListAndCount));
+    } catch (e) {
+      dispatch(actions.getUserArticleListFailureAction());
+
       throw Error("Internal Server Error! Try rater!");
     }
   };

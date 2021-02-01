@@ -13,14 +13,12 @@ import queryString from "query-string";
 
 interface PagenationProp {
   pagePerPagenation: number;
+  articleCouts: number;
 }
 export default function Pagenation({
   pagePerPagenation,
+  articleCouts,
 }: PagenationProp): JSX.Element {
-  const articleCouts = useSelector(
-    (state: RootState) => state.article.articlesCounts
-  );
-
   const [pagenationList, setpagenationList] = useState<number[]>([]);
 
   const match = useRouteMatch();

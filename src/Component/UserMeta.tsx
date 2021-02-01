@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Article } from "../db";
+import history from "../history";
 import { AppDispatch, RootState } from "../Redux";
 import { toggleFavoriteThunk } from "../Thunk/article";
 import { getMonthDate } from "../util";
@@ -17,6 +18,14 @@ export default function UserMeta({ article }: UserMetaProp): JSX.Element {
   const username = article.author.username;
   const favoriteIsActive = isFavorited ? "active" : "";
   const dispatch: AppDispatch = useDispatch();
+  const clickUserCard = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    // console.log("history", history);
+
+    history.push(`/profile/${username}`);
+  };
   const clickFavorite = () => {
     if (!isLogin) {
       return toast.error("You need to login!");
@@ -35,11 +44,11 @@ export default function UserMeta({ article }: UserMetaProp): JSX.Element {
   };
   return (
     <div className="article-meta">
-      <Link to={`profile/${username}`}>
+      <a onClick={clickUserCard}>
         <img src={article.author.image} />
-      </Link>
+      </a>
       <div className="info">
-        <Link to={`profile/${username}`} className="author">
+        <Link to="" onClick={clickUserCard} className="author">
           {username}
         </Link>
         <span className="date">{getMonthDate(article.createdAt)}</span>

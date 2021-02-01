@@ -9,7 +9,7 @@ export interface GetArticleCondition {
   offset?: number;
   limit?: number;
   author?: string;
-  favorited?: boolean;
+  favorited?: string;
   username?: string;
 }
 export const getArticleListAPI = async (
@@ -47,6 +47,7 @@ export const getArticleListAPI = async (
       favorited,
     header
   );
+
   return {
     articleList: response.data.articles,
     articlesCount: response.data.articlesCount,
