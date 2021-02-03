@@ -1,4 +1,5 @@
 {
+  "homepage": "https://mdm317.github.io/realworld-react-thunk/",
   "name": "webpack-react",
   "version": "1.0.0",
   "description": "",
@@ -7,7 +8,9 @@
     "start": "cross-env NODE_ENV=development webpack-dev-server --progress",
     "test": "npx jest",
     "build": "cross-env NODE_ENV=production webpack",
-    "lint": "npx eslint src/App.tsx --fix"
+    "lint": "npx eslint src/App.tsx --fix",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +20,7 @@
     "@types/redux-thunk": "^2.1.0",
     "axios": "^0.21.0",
     "core-js": "^3.7.0",
+    "gh-pages": "^3.1.0",
     "marked": "^1.2.7",
     "query-string": "^6.13.8",
     "react": "^17.0.1",
