@@ -26,7 +26,7 @@ export default function ArticleBoxUserFavorite({
     (state: RootState) => state.article.userFavoriteArticlesCounts
   );
   const { username } = useParams<{ username: string }>();
-  console.log("username", username);
+  // console.log("username", username);
 
   useEffect(() => {
     const query = queryString.parse(location.search);

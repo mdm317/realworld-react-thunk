@@ -46,32 +46,32 @@ server.use(
   })
 );
 
-// test("프로필 페이지에 이름 bio image follow 버튼이 보여야한다.", async () => {
-//   const { history, store } = renderDefault(
-//     <Route path="/profile/:username" component={Profile} />
-//   );
-//   history.push("/profile/" + profile.username);
+test("프로필 페이지에 이름 bio image follow 버튼이 보여야한다.", async () => {
+  const { history, store } = renderDefault(
+    <Route path="/profile/:username" component={Profile} />
+  );
+  history.push("/profile/" + profile.username);
 
-//   await screen.findByText(profile.username);
-//   screen.getByText(profile.bio);
-//   //다른 방법이 있나?
-//   const displayedImage = document.querySelector(
-//     "img.user-img"
-//   ) as HTMLImageElement;
-//   expect(displayedImage.src).toBe(profile.image);
+  await screen.findByText(profile.username);
+  screen.getByText(profile.bio);
+  //다른 방법이 있나?
+  const displayedImage = document.querySelector(
+    "img.user-img"
+  ) as HTMLImageElement;
+  expect(displayedImage.src).toBe(profile.image);
 
-//   expect(screen.queryByText("follow")).toBeNull();
+  expect(screen.queryByText("follow")).toBeNull();
 
-//   //login
-//   store.dispatch(loginSucAction(userFakeResponse.user));
+  //login
+  store.dispatch(loginSucAction(userFakeResponse.user));
 
-//   //follow 동작 테스트
-//   const followBtn = screen.getByText(/follow/i);
-//   fireEvent.click(followBtn);
+  //follow 동작 테스트
+  const followBtn = screen.getByText(/follow/i);
+  fireEvent.click(followBtn);
 
-//   expect(await screen.findByRole("alert")).toHaveTextContent(/success/i);
-//   screen.getByText(/unfollow/i);
-// });
+  expect(await screen.findByRole("alert")).toHaveTextContent(/success/i);
+  screen.getByText(/unfollow/i);
+});
 
 test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", async () => {
   const { history, store, debug } = renderDefault(
@@ -81,8 +81,8 @@ test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", as
 
   //btn 을 안누르면 랜더링 안되는 이유는???ㄴ
   //npm start 에서는 정상 동작
-  const favoriteBtn = await screen.findByText(/user articles/i);
-  fireEvent.click(favoriteBtn);
+  // const favoriteBtn = await screen.findByText(/user articles/i);
+  // fireEvent.click(favoriteBtn);
 
   // await screen.findByText(/loading/i);
   const list = await screen.findByRole("list", {
