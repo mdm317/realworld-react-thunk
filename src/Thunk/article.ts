@@ -7,6 +7,7 @@ import {
   GetArticleType,
   GetCommentsType,
   GetUserArticleListType,
+  GetUserFavoriteArticleListType,
 } from "../Redux/Article/types";
 import * as actions from "../Redux/Article/action";
 import {
@@ -51,6 +52,24 @@ export function getUserArticleList(
       dispatch(actions.getUserArticleListSuccessAction(articleListAndCount));
     } catch (e) {
       dispatch(actions.getUserArticleListFailureAction());
+
+      throw Error("Internal Server Error! Try rater!");
+    }
+  };
+}
+export function getUserFavoriteArticleListThunk(
+  payload: GetArticleCondition
+): ThunkAction<void, RootState, null, GetUserFavoriteArticleListType> {
+  return async (dispatch) => {
+    dispatch(actions.getUserFavoriteArticleListRequestAction());
+    try {
+      const articleListAndCount = await getArticleListAPI(payload);
+
+      dispatch(
+        actions.getUserFavoriteArticleListSuccessAction(articleListAndCount)
+      );
+    } catch (e) {
+      dispatch(actions.getUserFavoriteArticleListFailureAction());
 
       throw Error("Internal Server Error! Try rater!");
     }

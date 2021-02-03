@@ -2,3 +2,4 @@
 [] url 직접입력? 뒤로가기시 랜더링 기준
 [] profile 페이지 favorite 테그 
 [] 쿼리 더하기??/
+[] profile test 2번쨰 testcase

@@ -13,6 +13,7 @@ import { loginSucAction } from "../src/Redux/User/action";
 import {
   articleFakeResponse,
   articlesFakeResponse,
+  articlesOffsetFakeResponse,
 } from "./ApiResponse/article";
 import { debug } from "webpack";
 const server = setupServer();
@@ -37,36 +38,40 @@ server.use(
   }),
 
   rest.get(url + `/articles`, (req, res, ctx) => {
+    const favorited = req.url.searchParams.get("favorited");
+    if (favorited) {
+      return res(ctx.json(articlesOffsetFakeResponse));
+    }
     return res(ctx.json(articlesFakeResponse));
   })
 );
 
-test("프로필 페이지에 이름 bio image follow 버튼이 보여야한다.", async () => {
-  const { history, store } = renderDefault(
-    <Route path="/profile/:username" component={Profile} />
-  );
-  history.push("/profile/" + profile.username);
+// test("프로필 페이지에 이름 bio image follow 버튼이 보여야한다.", async () => {
+//   const { history, store } = renderDefault(
+//     <Route path="/profile/:username" component={Profile} />
+//   );
+//   history.push("/profile/" + profile.username);
 
-  await screen.findByText(profile.username);
-  screen.getByText(profile.bio);
-  //다른 방법이 있나?
-  const displayedImage = document.querySelector(
-    "img.user-img"
-  ) as HTMLImageElement;
-  expect(displayedImage.src).toBe(profile.image);
+//   await screen.findByText(profile.username);
+//   screen.getByText(profile.bio);
+//   //다른 방법이 있나?
+//   const displayedImage = document.querySelector(
+//     "img.user-img"
+//   ) as HTMLImageElement;
+//   expect(displayedImage.src).toBe(profile.image);
 
-  expect(screen.queryByText("follow")).toBeNull();
+//   expect(screen.queryByText("follow")).toBeNull();
 
-  //login
-  store.dispatch(loginSucAction(userFakeResponse.user));
+//   //login
+//   store.dispatch(loginSucAction(userFakeResponse.user));
 
-  //follow 동작 테스트
-  const followBtn = screen.getByText(/follow/i);
-  fireEvent.click(followBtn);
+//   //follow 동작 테스트
+//   const followBtn = screen.getByText(/follow/i);
+//   fireEvent.click(followBtn);
 
-  expect(await screen.findByRole("alert")).toHaveTextContent(/success/i);
-  screen.getByText(/unfollow/i);
-});
+//   expect(await screen.findByRole("alert")).toHaveTextContent(/success/i);
+//   screen.getByText(/unfollow/i);
+// });
 
 test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", async () => {
   const { history, store, debug } = renderDefault(
@@ -74,9 +79,16 @@ test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", as
   );
   history.push("/profile/" + profile.username);
 
+  //btn 을 안누르면 랜더링 안되는 이유는???ㄴ
+  //npm start 에서는 정상 동작
+  const favoriteBtn = await screen.findByText(/user articles/i);
+  fireEvent.click(favoriteBtn);
+
+  // await screen.findByText(/loading/i);
   const list = await screen.findByRole("list", {
     name: /Article list/i,
   });
+
   //   debug();
   //   articlepreview 가 5개 있어야된다
   const articleListElemList = within(list).getAllByRole("listitem");
@@ -89,6 +101,42 @@ test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", as
 
   //반환된 articleList 값
   const articleList = articlesFakeResponse.articles;
+  //각 articlepreview 는 제목과 내용이 화면에 있어야한다.
+  articleListElems.forEach((articleElem, i) => {
+    const articleElemWithin = within(articleElem);
+    expect(articleElemWithin.getByText(articleList[i].title)).toBeVisible();
+    expect(
+      articleElemWithin.getByText(articleList[i].description)
+    ).toBeVisible();
+  });
+});
+
+test("프로필 페이지에 그 유저가 좋아하는 글이 보여져야 한다..", async () => {
+  const { history, store } = renderDefault(
+    <Route path="/profile/:username" component={Profile} />
+  );
+  history.push("/profile/" + profile.username);
+
+  const favoriteBtn = await screen.findByText(/favorite/i);
+  fireEvent.click(favoriteBtn);
+
+  await screen.findByText(/loading/i);
+
+  const list = await screen.findByRole("list", {
+    name: /Article list/i,
+  });
+
+  // //   articlepreview 가 5개 있어야된다
+  const articleListElemList = within(list).getAllByRole("listitem");
+
+  //tag list 를 걸러준다 다른 방법은?
+  const articleListElems = articleListElemList.filter(
+    (elem) => elem.tagName !== "SPAN"
+  );
+  expect(articleListElems.length).toBe(5);
+
+  //좋아요가 눌러진된 articleList 값
+  const articleList = articlesOffsetFakeResponse.articles;
   //각 articlepreview 는 제목과 내용이 화면에 있어야한다.
   articleListElems.forEach((articleElem, i) => {
     const articleElemWithin = within(articleElem);

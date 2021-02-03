@@ -41,6 +41,23 @@ export const getUserArticleListFailureAction = () =>
     type: types.GET_USER_ARTICLES_FAILURE,
   } as const);
 
+export const getUserFavoriteArticleListRequestAction = () =>
+  ({
+    type: types.GET_USER_FAVORITE_ARTICLES_REQUEST,
+  } as const);
+
+export const getUserFavoriteArticleListSuccessAction = (
+  articleListAndCount: ArticleListAndCount
+) =>
+  ({
+    type: types.GET_USER_FAVORITE_ARTICLES_SUCCESS,
+    payload: articleListAndCount,
+  } as const);
+export const getUserFavoriteArticleListFailureAction = () =>
+  ({
+    type: types.GET_USER_FAVORITE_ARTICLES_FAILURE,
+  } as const);
+
 export const getArticleRequestAction = () =>
   ({
     type: types.GET_ARTICLE_REQUEST,

@@ -7,6 +7,8 @@ interface ArticleState {
   articlesCounts: number;
   userArticleList: Article[] | null;
   userArticlesCounts: number;
+  userFavoriteArticleList: Article[] | null;
+  userFavoriteArticlesCounts: number;
   userArticlesLoading: boolean;
   articleDetail: Article | null;
   articleListIsLoading: boolean;
@@ -18,6 +20,8 @@ const initialState: ArticleState = {
   articlesCounts: 0,
   userArticleList: null,
   userArticlesCounts: 0,
+  userFavoriteArticleList: null,
+  userFavoriteArticlesCounts: 0,
   userArticlesLoading: false,
   articleDetail: null,
   articleListIsLoading: false,
@@ -64,6 +68,21 @@ const articleReducer = (
       return {
         ...state,
         userArticlesLoading: false,
+      };
+    case types.GET_USER_FAVORITE_ARTICLES_REQUEST:
+      return {
+        ...state,
+        userFavoriteArticleList: null,
+      };
+    case types.GET_USER_FAVORITE_ARTICLES_SUCCESS:
+      return {
+        ...state,
+        userFavoriteArticlesCounts: action.payload.articlesCount,
+        userFavoriteArticleList: action.payload.articleList,
+      };
+    case types.GET_USER_FAVORITE_ARTICLES_FAILURE:
+      return {
+        ...state,
       };
     case types.GET_ARTICLE_REQUEST:
       return { ...state, articleDetail: null };

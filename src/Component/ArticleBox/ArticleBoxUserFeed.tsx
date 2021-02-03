@@ -18,7 +18,7 @@ export default function ArticleBoxUserFeed({
   const location = useLocation();
   const { username } = useParams<{ username: string }>();
 
-  // console.log("username", username);
+  console.log("username", username);
   // console.log("location", location);
 
   useEffect(() => {

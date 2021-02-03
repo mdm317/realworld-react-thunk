@@ -11,6 +11,11 @@ export type GetUserArticleListType =
   | ReturnType<typeof action.getUserArticleListSuccessAction>
   | ReturnType<typeof action.getUserArticleListFailureAction>;
 
+export type GetUserFavoriteArticleListType =
+  | ReturnType<typeof action.getUserFavoriteArticleListRequestAction>
+  | ReturnType<typeof action.getUserFavoriteArticleListSuccessAction>
+  | ReturnType<typeof action.getUserFavoriteArticleListFailureAction>;
+
 export type GetArticleType =
   | ReturnType<typeof action.getArticleRequestAction>
   | ReturnType<typeof action.getArticleSuccessAction>
@@ -36,7 +41,8 @@ export type ArticleActionType =
   | AddCommentType
   | DeleteCommentType
   | ToggleFollowType
-  | GetUserArticleListType;
+  | GetUserArticleListType
+  | GetUserFavoriteArticleListType;
 
 export const GET_ARTICLE_LIST_REQUEST = "GET_ARTICLE_LIST_REQUEST";
 export const GET_ARTICLE_LIST_SUCCESS = "GET_ARTICLE_LIST_SUCCESS";
@@ -57,3 +63,10 @@ export const TOGGLE_ARTICLE_FOLLOW = "TOGGLE_ARTICLE_FOLLOW";
 export const GET_USER_ARTICLES_REQUEST = "GET_USER_ARTICLES_REQUEST";
 export const GET_USER_ARTICLES_SUCCESS = "GET_USER_ARTICLES_SUCCESS";
 export const GET_USER_ARTICLES_FAILURE = "GET_USER_ARTICLES_FAILURE";
+
+export const GET_USER_FAVORITE_ARTICLES_REQUEST =
+  "GET_USER_FAVORITE_ARTICLES_REQUEST";
+export const GET_USER_FAVORITE_ARTICLES_SUCCESS =
+  "GET_USER_FAVORITE_ARTICLES_SUCCESS";
+export const GET_USER_FAVORITE_ARTICLES_FAILURE =
+  "GET_USER_FAVORITE_ARTICLES_FAILURE";
