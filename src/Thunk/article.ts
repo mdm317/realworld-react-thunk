@@ -27,8 +27,6 @@ export function getArticleList(
   payload: GetArticleCondition
 ): ThunkAction<void, RootState, null, GetArticleListType> {
   return async (dispatch) => {
-    console.log("author", payload.author);
-
     dispatch(actions.getArticleListRequestAction());
     try {
       const articleListAndCount = await getArticleListAPI(payload);

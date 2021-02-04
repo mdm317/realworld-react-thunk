@@ -25,7 +25,6 @@ export default function App(): JSX.Element {
       <Router history={history}>
         <Layout>
           <Switch>
-            <Route exact path="/" component={Home} />
             <Route path="/login" component={Login} />
             <Route path="/setting" component={SettingUser} />
             <Route path="/signup" component={SignUp} />
@@ -33,7 +32,7 @@ export default function App(): JSX.Element {
             <Route path="/article/edit/:slug" component={SettingPost} />
             <Route path="/article/:slug" component={ArticleDetail} />
             <Route path="/profile/:username" component={Profile} />
-            <Route component={() => <h1>NOT FOUND</h1>} />
+            <Route component={Home} />
           </Switch>
         </Layout>
       </Router>

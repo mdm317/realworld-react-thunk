@@ -14,10 +14,8 @@ export default function ArticleList({
   const clickPreview = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
     const slug = (e.currentTarget as HTMLElement).id;
-    // console.log(slug);
-    // console.log("history", history);
 
-    // history.push(`/article/${slug}`);
+    history.push(`/article/${slug}`);
   };
   return (
     <>

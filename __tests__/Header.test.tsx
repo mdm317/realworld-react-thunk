@@ -28,6 +28,7 @@ beforeEach(() => {
 test("비로그인시 home signup 링크만 보여야 한다. ", () => {
   expect(screen.getByText(/home/i)).toBeVisible();
   expect(screen.getByText(/sign up/i)).toBeVisible();
+  expect(screen.getByText(/log in/i)).toBeVisible();
 
   expect(screen.queryByText(/log out/i)).toBeNull();
   expect(screen.queryByText(/new post/i)).toBeNull();

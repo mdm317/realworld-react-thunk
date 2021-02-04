@@ -1,3 +1,4 @@
+import { getFileInfo } from "prettier";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -12,16 +13,20 @@ import UserIcon from "../UserIcon";
 
 interface ArticleOthersCardProp {
   article: Article;
+  username?: string;
 }
 export default function ArticleOthersCard({
   article,
+  username,
 }: ArticleOthersCardProp): JSX.Element {
   const isFollow = article.author.following;
   const isFavorited = article.favorited;
   const dispatch: AppDispatch = useDispatch();
   const clickFollowBtn = () => {
     // console.log("click follow");
-
+    if (username === undefined) {
+      return toast.error("You need to login ");
+    }
     toggleFollow(article.author.username, isFollow)
       .then(() => {
         dispatch(toggleArticleFollowAction());
@@ -31,6 +36,9 @@ export default function ArticleOthersCard({
       });
   };
   const clickFavorite = () => {
+    if (username === undefined) {
+      return toast.error("You need to login ");
+    }
     dispatch(toggleFavoriteThunk(article.slug, isFavorited)).catch(
       (e: Error) => {
         toast.error(e.message);

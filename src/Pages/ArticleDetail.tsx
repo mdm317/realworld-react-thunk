@@ -30,21 +30,20 @@ export default function ArticleDetail(): JSX.Element {
     return <h3>is Loading... </h3>;
   }
   const isMyPost = username === article.author.username ? true : false;
+  console.log("istMyPost", isMyPost);
 
   return (
     <div className="article-page">
       <div className="banner">
         <div className="container">
           <h1>{article.title}</h1>
-          {username && (
-            <div data-testid="articleUserCard">
-              {isMyPost ? (
-                <ArticleMyCard article={article} />
-              ) : (
-                <ArticleOthersCard article={article} />
-              )}
-            </div>
-          )}
+          <div data-testid="articleUserCard">
+            {isMyPost ? (
+              <ArticleMyCard article={article} />
+            ) : (
+              <ArticleOthersCard article={article} />
+            )}
+          </div>
         </div>
       </div>
 
@@ -63,15 +62,13 @@ export default function ArticleDetail(): JSX.Element {
         <hr />
 
         <div className="article-actions">
-          {username && (
-            <div data-testid="articleUserCard">
-              {isMyPost ? (
-                <ArticleMyCard article={article} />
-              ) : (
-                <ArticleOthersCard article={article} />
-              )}
-            </div>
-          )}
+          <div data-testid="articleUserCard">
+            {isMyPost ? (
+              <ArticleMyCard article={article} />
+            ) : (
+              <ArticleOthersCard article={article} username={username} />
+            )}
+          </div>
         </div>
 
         <div className="row">

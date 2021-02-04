@@ -55,15 +55,26 @@ export default function Header(): JSX.Element {
               </Link>
             </li>
           ) : (
-            <li className="nav-item">
-              <NavLink
-                activeClassName="active"
-                to="/signup"
-                className="nav-link"
-              >
-                Sign up
-              </NavLink>
-            </li>
+            <>
+              <li className="nav-item">
+                <NavLink
+                  activeClassName="active"
+                  to="/signup"
+                  className="nav-link"
+                >
+                  Sign up
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink
+                  activeClassName="active"
+                  to="/login"
+                  className="nav-link"
+                >
+                  Log in
+                </NavLink>
+              </li>
+            </>
           )}
         </ul>
       </div>
