@@ -1,5 +1,5 @@
 import * as types from "./types";
-import { LoginUser, Profile, User } from "../../db";
+import { LoginUser, Profile } from "../../db";
 export interface AuthError {
   username?: [string];
   email?: [string];

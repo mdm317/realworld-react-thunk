@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   BrowserRouter,
   Link,
@@ -11,8 +11,10 @@ import {
 } from "react-router-dom";
 import ArticleBoxGlobal from "../Component/ArticleBox/ArticleBoxGlobal";
 import ArticleBoxUserFeed from "../Component/ArticleBox/ArticleBoxUserFeed";
+import HomeTagList from "../Component/HomeTagList";
 import { RootState } from "../Redux";
-
+import { getTagListThunk } from "../Thunk/tag";
+import { createLocation } from "history";
 // const pagePerPagenation = 5;
 function CusLink(username: string) {
   const history = useHistory();
@@ -22,6 +24,11 @@ export default function Home(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
   const username = useSelector((state: RootState) => state.user.user?.username);
+  const tagList = useSelector((state: RootState) => state.tag.tagList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getTagListThunk());
+  }, []);
 
   return (
     <div className="home-page">
@@ -31,10 +38,9 @@ export default function Home(): JSX.Element {
           <p>A place to share your knowledge.</p>
         </div>
       </div>
-
-      <div className="container page">
-        <div className="row">
-          <BrowserRouter>
+      <BrowserRouter>
+        <div className="container page">
+          <div className="row">
             <div className="col-md-9">
               <div className="feed-toggle">
                 <ul className="nav nav-pills outline-active">
@@ -81,62 +87,17 @@ export default function Home(): JSX.Element {
                   </>
                 )}
               />
-              {/* {articleIsLoading ? (
-                <h1>Is Loading...</h1>
-              ) : (
-                <Route
-                  path={`${match.url}`}
-                  render={(prop) => (
-                    <>
-                      <GlobalArticleList
-                        pagePerPagenation={pagePerPagenation}
-                      />
-                      <Pagenation
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                        pagePerPagenation={pagePerPagenation}
-                      />
-                    </>
-                  )}
-                />
-              )} */}
             </div>
-          </BrowserRouter>
-          {/* <div className="col-md-3">
-            <div className="sidebar">
-              <p>Popular Tags</p>
 
-              <div className="tag-list">
-                <a href="" className="tag-pill tag-default">
-                  programming
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  javascript
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  emberjs
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  angularjs
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  react
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  mean
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  node
-                </a>
-                <a href="" className="tag-pill tag-default">
-                  rails
-                </a>
+            <div className="col-md-3">
+              <div className="sidebar">
+                <p>Popular Tags</p>
+                <HomeTagList tagList={tagList} />
               </div>
             </div>
           </div>
-      */}
         </div>
-      </div>
+      </BrowserRouter>
     </div>
   );
 }

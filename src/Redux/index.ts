@@ -3,12 +3,14 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { createLogger } from "redux-logger";
 import article from "./Article/reducer";
 import user from "./User/reducer";
+import tag from "./Tag";
 import server from "./Server/reducer";
 import reduxThunk, { ThunkDispatch } from "redux-thunk";
 import { AnyAction } from "redux";
 const rootReducer = combineReducers({
   article,
   user,
+  tag,
 });
 // const configureStore = (context) => {
 //   console.log(context);

@@ -30,10 +30,14 @@ export default function ArticleBoxUserFavorite({
 
   useEffect(() => {
     const query = queryString.parse(location.search);
+    const tag = query.tag as string;
     const currentPage = query.page;
     const getArticleCondition: GetArticleCondition = {
       limit: pagePerPagenation,
     };
+    if (tag) {
+      getArticleCondition.tag = tag;
+    }
     getArticleCondition.favorited = username;
     if (currentPage) {
       const pageNum = Number(currentPage);

@@ -7,6 +7,8 @@ import {
   useLocation,
   useRouteMatch,
 } from "react-router-dom";
+import { LocationDescriptorObject, Location } from "history";
+
 import { toast } from "react-toastify";
 import { RootState } from "../Redux";
 import queryString from "query-string";
@@ -84,9 +86,12 @@ export default function Pagenation({
           >
             {/* <Link to={{ pathname: '/foo', query: { the: 'query' } }}/> */}
             <Link
-              to={{
-                search: `?page=${page}`,
-                pathname: `${match.url}`,
+              to={(location: Location) => {
+                const parsed = queryString.parse(location.search);
+                parsed.page = page.toString();
+                const nextLocation: LocationDescriptorObject = {};
+                nextLocation.search = queryString.stringify(parsed);
+                return nextLocation;
               }}
               className="page-link "
             >

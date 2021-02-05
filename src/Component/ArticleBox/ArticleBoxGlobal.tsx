@@ -16,6 +16,8 @@ export default function ArticleBoxGlobal({
 }: globalArticleListprop): JSX.Element {
   const dispatch = useDispatch();
   const location = useLocation();
+  console.log("location", location);
+
   const articleList = useSelector(
     (state: RootState) => state.article.articleList
   );
@@ -25,9 +27,15 @@ export default function ArticleBoxGlobal({
   useEffect(() => {
     const query = queryString.parse(location.search);
     const currentPage = query.page;
+    const tag = query.tag as string;
+    console.log("tag", tag);
+
     const getArticleCondition: GetArticleCondition = {
       limit: pagePerPagenation,
     };
+    if (tag) {
+      getArticleCondition.tag = tag;
+    }
     if (currentPage) {
       const pageNum = Number(currentPage);
       const offset = (pageNum - 1) * pagePerPagenation;

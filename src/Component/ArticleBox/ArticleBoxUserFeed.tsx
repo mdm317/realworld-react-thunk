@@ -29,11 +29,15 @@ export default function ArticleBoxUserFeed({
     // console.log("query", query);
 
     const currentPage = query.page;
+    const tag = query.tag as string;
 
     const getArticleCondition: GetArticleCondition = {
       limit: pagePerPagenation,
       author: username,
     };
+    if (tag) {
+      getArticleCondition.tag = tag;
+    }
     if (currentPage) {
       const pageNum = Number(currentPage);
       const offset = (pageNum - 1) * pagePerPagenation;
