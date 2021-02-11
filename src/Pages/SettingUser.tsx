@@ -9,6 +9,7 @@ import TextArea from "../Component/TextArea";
 import { AppDispatch, RootState } from "../Redux";
 import { updateUserThunk } from "../Thunk/user";
 import { UpdateUserProp } from "../types";
+import baseUrl from "../baseurl";
 
 export default function SettingUser(): JSX.Element {
   const dispatch: AppDispatch = useDispatch();
@@ -46,7 +47,7 @@ export default function SettingUser(): JSX.Element {
     dispatch(updateUserThunk(newUser))
       .then(() => {
         toast.success("Change user success!");
-        history.push("/");
+        history.push(`${baseUrl}/`);
       })
       .catch((e: Error) => {
         toast.error(e.message);

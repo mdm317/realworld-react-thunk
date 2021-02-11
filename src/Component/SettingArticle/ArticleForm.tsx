@@ -6,7 +6,7 @@ import { addPost, addPostAPI, editArticle } from "../../Api/article";
 import { Article } from "../../db";
 import Input from "../Input";
 import TextArea from "../TextArea";
-
+import baseUrl from "../../baseurl";
 interface ArticleFormProp {
   article?: Article;
 }
@@ -16,13 +16,16 @@ export default function ArticleForm({ article }: ArticleFormProp): JSX.Element {
   const [tagList, settagList] = useState<string[]>(initialTagList);
   const handleAddTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      e.preventDefault();
       const value = (e.target as HTMLInputElement).value;
       (e.target as HTMLInputElement).value = "";
       if (tagList.indexOf(value) !== -1) {
         toast.error("This tag has already been added!");
         return;
       }
-      e.preventDefault();
+      if (value === "") {
+        return;
+      }
       settagList([...tagList, value]);
     }
   };
@@ -45,20 +48,20 @@ export default function ArticleForm({ article }: ArticleFormProp): JSX.Element {
       editArticle(addPostProp, article.slug)
         .then(() => {
           toast.success("edit article success");
-          history.push("/");
+          history.push(`${baseUrl}/`);
         })
         .catch((e) => {
-          history.push("/");
+          history.push(`${baseUrl}/`);
           toast.error(e.message);
         });
     } else {
       addPost(addPostProp)
         .then(() => {
           toast.success("add post success");
-          history.push("/");
+          history.push(`${baseUrl}/`);
         })
         .catch((e) => {
-          history.push("/");
+          history.push(`${baseUrl}/`);
           toast.error(e.message);
         });
     }

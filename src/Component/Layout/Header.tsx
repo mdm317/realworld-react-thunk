@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { logOutAPI } from "../../Api/user";
 import { RootState } from "../../Redux";
 import { logoutThunk } from "../../Thunk/user";
+import baseUrl from "../../baseurl";
 
 export default function Header(): JSX.Element {
   const isLogin = useSelector((state: RootState) => state.user.isLogin);
@@ -21,7 +22,12 @@ export default function Header(): JSX.Element {
         </a>
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
-            <NavLink exact activeClassName="active" to="/" className="nav-link">
+            <NavLink
+              exact
+              activeClassName="active"
+              to={`${baseUrl}/`}
+              className="nav-link"
+            >
               Home
             </NavLink>
           </li>
@@ -30,7 +36,7 @@ export default function Header(): JSX.Element {
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
-                  to="/addPost"
+                  to={`${baseUrl}/addPost`}
                   className="nav-link"
                 >
                   New Post
@@ -39,7 +45,7 @@ export default function Header(): JSX.Element {
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
-                  to="/setting"
+                  to={`${baseUrl}/setting`}
                   className="nav-link"
                 >
                   Settings
@@ -50,7 +56,11 @@ export default function Header(): JSX.Element {
 
           {isLogin ? (
             <li className="nav-item">
-              <Link onClick={clickLogOut} to="/" className="nav-link">
+              <Link
+                onClick={clickLogOut}
+                to={`${baseUrl}/`}
+                className="nav-link"
+              >
                 Log out
               </Link>
             </li>
@@ -59,7 +69,7 @@ export default function Header(): JSX.Element {
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
-                  to="/signup"
+                  to={`${baseUrl}/signup`}
                   className="nav-link"
                 >
                   Sign up
@@ -68,7 +78,7 @@ export default function Header(): JSX.Element {
               <li className="nav-item">
                 <NavLink
                   activeClassName="active"
-                  to="/login"
+                  to={`${baseUrl}/login`}
                   className="nav-link"
                 >
                   Log in

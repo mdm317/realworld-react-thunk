@@ -55,17 +55,7 @@ export default function Profile(): JSX.Element {
   }, [username]);
   const [pagePerPagenation, setpagePerPagenation] = useState(5);
 
-  const clickNav = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    e.preventDefault();
-    const text = (e.target as HTMLElement).innerText;
-    console.log(text);
-    if (text === "Favorited Articles") {
-      setisFavoited(!isFavorited);
-    }
-  };
-  const clickFollowBtn = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const clickFollowBtn = () => {
     toggleFollow(username, _following)
       .then(() => {
         set_following(!_following);
@@ -90,29 +80,21 @@ export default function Profile(): JSX.Element {
           <div className="row">
             <div className="col-xs-12 col-md-10 offset-md-1">
               <img src={profile.image} className="user-img" />
-
               <h4>{profile.username}</h4>
               <p>{profile.bio}</p>
-
-              {loginusername &&
-                !isMyProfile &&
-                (_following ? (
-                  <button
-                    onClick={clickFollowBtn}
-                    className="btn btn-sm btn-outline-secondary action-btn"
-                  >
-                    <i className="ion-plus-round"></i>
-                    &nbsp; UnFollow {profile.username}
-                  </button>
-                ) : (
-                  <button
-                    onClick={clickFollowBtn}
-                    className="btn btn-sm btn-outline-secondary action-btn"
-                  >
-                    <i className="ion-plus-round"></i>
-                    &nbsp; Follow {profile.username}
-                  </button>
-                ))}
+              {loginusername && !isMyProfile && (
+                <button
+                  onClick={clickFollowBtn}
+                  className={`btn btn-sm btn-outline-secondary action-btn ${
+                    _following ? "active" : ""
+                  }`}
+                >
+                  <i className="ion-plus-round"></i>
+                  {_following
+                    ? `✋ UnFollow ${profile.username}`
+                    : `🖐 Follow ${profile.username}`}
+                </button>
+              )}
             </div>
           </div>
         </div>

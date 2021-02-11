@@ -7,6 +7,7 @@ import { deleteArticle } from "../../ApiWrapper/article";
 import { Article } from "../../db";
 import articleReducer from "../../Redux/Article/reducer";
 import { getMonthDate } from "../../util";
+import baseUrl from "../../history";
 import UserIcon from "../UserIcon";
 
 interface ArticleMyCardProp {
@@ -20,7 +21,7 @@ export default function ArticleMyCard({
     deleteArticle(article.slug)
       .then(() => {
         toast.success("delete article success!");
-        history.push("/");
+        history.push(`${baseUrl}/`);
         // history.goBack(); //
       })
       .catch((e) => {

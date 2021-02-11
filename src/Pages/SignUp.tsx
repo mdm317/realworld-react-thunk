@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import ErrorMessage from "../Component/ErrorMessage";
 import { AppDispatch, RootState } from "../Redux";
 import { signupThunk } from "../Thunk/user";
-
+import baseUrl from "../baseurl";
 export default function Login(): JSX.Element {
   const history = useHistory();
   const dispatch: AppDispatch = useDispatch();
@@ -32,7 +32,8 @@ export default function Login(): JSX.Element {
     dispatch(signupThunk(signupUser))
       .then(() => {
         toast.success("Signup Success");
-        history.push("/login");
+
+        history.push(`${baseUrl}/login`);
       })
       .catch((error: Error) => {
         toast.error(error.message);

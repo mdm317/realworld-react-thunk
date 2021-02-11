@@ -16,7 +16,7 @@ export default function ArticleBoxGlobal({
 }: globalArticleListprop): JSX.Element {
   const dispatch = useDispatch();
   const location = useLocation();
-  console.log("location", location);
+  // console.log("location", location);
 
   const articleList = useSelector(
     (state: RootState) => state.article.articleList

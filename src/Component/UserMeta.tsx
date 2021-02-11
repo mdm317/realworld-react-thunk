@@ -8,6 +8,7 @@ import history from "../history";
 import { AppDispatch, RootState } from "../Redux";
 import { toggleFavoriteThunk } from "../Thunk/article";
 import { getMonthDate } from "../util";
+import baseUrl from "../baseurl";
 interface UserMetaProp {
   article: Article;
 }
@@ -24,7 +25,7 @@ export default function UserMeta({ article }: UserMetaProp): JSX.Element {
     e.preventDefault();
     // console.log("history", history);
 
-    history.push(`/profile/${username}`);
+    history.push(`${baseUrl}/profile/${username}`);
   };
   const clickFavorite = () => {
     if (!isLogin) {

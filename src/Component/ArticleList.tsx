@@ -5,6 +5,7 @@ import { Article } from "../db";
 import { RootState } from "../Redux";
 import UserMeta from "./UserMeta";
 import history from "../history";
+import baseUrl from "../baseurl";
 interface ArticleListProp {
   articleList: Article[];
 }
@@ -15,7 +16,7 @@ export default function ArticleList({
     e.preventDefault();
     const slug = (e.currentTarget as HTMLElement).id;
 
-    history.push(`/article/${slug}`);
+    history.push(`${baseUrl}/article/${slug}`);
   };
   return (
     <>

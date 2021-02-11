@@ -23,7 +23,9 @@ export default function ArticleOthersCard({
   const isFavorited = article.favorited;
   const dispatch: AppDispatch = useDispatch();
   const clickFollowBtn = () => {
-    // console.log("click follow");
+    console.log("click follow");
+    console.log("username", username);
+
     if (username === undefined) {
       return toast.error("You need to login ");
     }

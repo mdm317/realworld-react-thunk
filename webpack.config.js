@@ -1,4 +1,5 @@
 /* eslint-disable */
+const webpack = require("webpack");
 const path = require("path");
 const HtmlPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
@@ -8,7 +9,7 @@ module.exports= {
         contentBase: path.join(__dirname, "dist"),
         publicPath: "/",
         overlay: true,
-        port: 3000,
+        port: 4000,
         stats: "errors-only",
         historyApiFallback: true,
     },
@@ -55,5 +56,6 @@ module.exports= {
             : false,
     }),
     new CleanWebpackPlugin(),
+    new webpack.EnvironmentPlugin(["BASEURL"]),
     ],
 };

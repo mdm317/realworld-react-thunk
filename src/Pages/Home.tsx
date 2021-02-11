@@ -23,6 +23,8 @@ function CusLink(username: string) {
 export default function Home(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
+  console.log("match", match);
+
   const username = useSelector((state: RootState) => state.user.user?.username);
   const tagList = useSelector((state: RootState) => state.tag.tagList);
   const dispatch = useDispatch();
@@ -50,7 +52,7 @@ export default function Home(): JSX.Element {
                         role="button"
                         activeClassName="active"
                         className="nav-link"
-                        to={`${match.url}` + "userFeed/" + username}
+                        to={`${match.path}` + "userFeed/" + username}
                       >
                         My Feed
                       </NavLink>
@@ -63,7 +65,7 @@ export default function Home(): JSX.Element {
                       exact
                       activeClassName="active"
                       className="nav-link "
-                      to={`${match.url}`}
+                      to={`${match.path}`}
                     >
                       Global Feed
                     </NavLink>
@@ -72,7 +74,7 @@ export default function Home(): JSX.Element {
               </div>
               <Route
                 exact
-                path={`${match.url}`}
+                path={`${match.path}`}
                 render={() => (
                   <>
                     <ArticleBoxGlobal pagePerPagenation={pagePerPagenation} />
@@ -80,7 +82,7 @@ export default function Home(): JSX.Element {
                 )}
               />
               <Route
-                path={`${match.url}userFeed/:username`}
+                path={`${match.path}userFeed/:username`}
                 render={() => (
                   <>
                     <ArticleBoxUserFeed pagePerPagenation={pagePerPagenation} />

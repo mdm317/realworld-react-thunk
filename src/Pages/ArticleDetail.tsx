@@ -15,6 +15,7 @@ export default function ArticleDetail(): JSX.Element {
 
   const user = useSelector((state: RootState) => state.user.user);
   const username = user?.username;
+  console.log("username", username);
 
   useEffect(() => {
     if (slug) {
@@ -41,7 +42,7 @@ export default function ArticleDetail(): JSX.Element {
             {isMyPost ? (
               <ArticleMyCard article={article} />
             ) : (
-              <ArticleOthersCard article={article} />
+              <ArticleOthersCard article={article} username={username} />
             )}
           </div>
         </div>

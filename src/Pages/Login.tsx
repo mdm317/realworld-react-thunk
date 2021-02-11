@@ -5,7 +5,7 @@ import ErrorMessage from "../Component/ErrorMessage";
 import { AppDispatch, RootState } from "../Redux";
 import { Link, useHistory } from "react-router-dom";
 import { loginThunk } from "../Thunk/user";
-
+import baseUrl from "../baseurl";
 export default function Login(): JSX.Element {
   const history = useHistory();
   const dispatch: AppDispatch = useDispatch();
@@ -31,7 +31,7 @@ export default function Login(): JSX.Element {
     )
       .then(() => {
         toast.success("login success!");
-        history.push("/");
+        history.push(`${baseUrl}/`);
       })
       .catch((error: Error) => {
         toast.error(error.message);
