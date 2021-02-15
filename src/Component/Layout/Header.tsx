@@ -17,9 +17,9 @@ export default function Header(): JSX.Element {
   return (
     <nav className="navbar navbar-light">
       <div className="container">
-        <a href="/" className="navbar-brand">
+        <Link to={`${baseUrl}/`} className="navbar-brand">
           conduit
-        </a>
+        </Link>
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
             <NavLink
