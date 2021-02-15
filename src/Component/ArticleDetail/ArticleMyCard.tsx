@@ -7,7 +7,7 @@ import { deleteArticle } from "../../ApiWrapper/article";
 import { Article } from "../../db";
 import articleReducer from "../../Redux/Article/reducer";
 import { getMonthDate } from "../../util";
-import baseUrl from "../../history";
+import baseUrl from "../../baseurl";
 import UserIcon from "../UserIcon";
 
 interface ArticleMyCardProp {
@@ -36,7 +36,7 @@ export default function ArticleMyCard({
         image={article.author.image}
       />
       <Link
-        to={`/article/edit/${article.slug}`}
+        to={`${baseUrl}/article/edit/${article.slug}`}
         className="btn btn-sm btn-outline-secondary"
       >
         <i className="ion-plus-round"></i> &nbsp;🔨 edit Post
