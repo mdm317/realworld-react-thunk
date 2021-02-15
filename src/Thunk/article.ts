@@ -22,6 +22,7 @@ import {
 import { AddPostApiProp } from "../types";
 import { Article } from "../db";
 import { favoriteAPI, unFavoriteAPI } from "../Api/article";
+import { AxiosError } from "axios";
 
 export function getArticleList(
   payload: GetArticleCondition
@@ -147,6 +148,9 @@ export function toggleFavoriteThunk(
       dispatch(actions.getArticleSuccessAction(article));
       return;
     } catch (e) {
+      if (e.response.status === 403) {
+        throw Error("you need to login");
+      }
       throw Error("Internal Server Error! Try rater!");
     }
   };

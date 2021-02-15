@@ -1,62 +1,51 @@
 import React from "react";
-import { render, fireEvent, screen, within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 
 import "@testing-library/jest-dom";
-import Home from "../src/Pages/Home";
+import Home from "../../src/Pages/Home";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
-import { Router } from "react-router-dom";
-import makeStore from "../src/Redux";
-import { Provider } from "react-redux";
-import { ToastContainer } from "react-toastify";
-import { createMemoryHistory } from "history";
-import { url } from "../src/db";
+import { url } from "../../src/db";
 
-import { responseArticleListLimit5 } from "./ApiResponse/article";
+import {
+  articleListLimit5Response,
+  articlesFakeResponse,
+} from "../ApiResponse/article";
+import { renderDefault } from "../util";
 const pagePerPagenation = 5;
 const server = setupServer();
 
 beforeAll(() => {
   server.listen();
-});
-beforeEach(() => {
   server.use(
-    rest.get(url + `/articles?limit=${pagePerPagenation}&`, (req, res, ctx) => {
-      return res(ctx.json(responseArticleListLimit5));
+    rest.get(url + `/articles`, (req, res, ctx) => {
+      const limit = req.url.searchParams.get("limit");
+      //limit 가 5 가 아니면 아무데이터도 안줌
+      if (Number(limit) !== pagePerPagenation) {
+        return res(ctx.status(200));
+      }
+      return res(ctx.json(articleListLimit5Response));
     })
   );
 });
-afterEach(() => {
-  server.resetHandlers();
-});
 afterAll(() => server.close());
 
-function wrapWithRouter(component: JSX.Element, history: any) {
-  return <Router history={history}>{component}</Router>;
-}
-function renderWithProvidersAndToast(component: JSX.Element) {
-  const store = makeStore();
-  return render(
-    <Provider store={store}>
-      {component}
-      <ToastContainer />
-    </Provider>
-  );
-}
-
 test("처음에는 5개의 article preview 가 화면에표시되어야한다.", async () => {
-  const articleList = responseArticleListLimit5.articles;
+  const articleList = articleListLimit5Response.articles;
 
-  const history = createMemoryHistory();
-  renderWithProvidersAndToast(wrapWithRouter(<Home />, history));
+  renderDefault(<Home />);
+
   const list = await screen.findByRole("list", {
     name: /Article list/i,
   });
 
+  const listElems = within(list).getAllByRole("listitem");
+  //tag list 도 포함되 있으므로 tag list 를 제거한다.
+  const articleListElems = listElems.filter(
+    (elem) => !elem.className.includes("tag")
+  );
   //articlepreview 가 5개 있어야된다
-  const articleListElems = within(list).getAllByRole("listitem");
   expect(articleListElems.length).toBe(5);
-
   //각 articlepreview 는 제목과 내용이 화면에 있어야한다.
   articleListElems.forEach((articleElem, i) => {
     const articleElemWithin = within(articleElem);
@@ -68,13 +57,13 @@ test("처음에는 5개의 article preview 가 화면에표시되어야한다.",
 });
 test(`pagenation page 를 누르면 
   다른 페이지의 내용을 표시해야 한다.`, async () => {
-  const history = createMemoryHistory();
-  renderWithProvidersAndToast(wrapWithRouter(<Home />, history));
+  renderDefault(<Home />);
+
   server.use(
     rest.get(
       url + `/articles?offset=30&limit=${pagePerPagenation}&`,
       (req, res, ctx) => {
-        return res(ctx.json(responseArticleListLimit5));
+        return res(ctx.json(articlesFakeResponse));
       }
     )
   );
@@ -90,18 +79,22 @@ test(`pagenation page 를 누르면
 
   fireEvent.click(pagenum);
 
-  //페이지 갱신 저에 is loading 이라는 문구 를 표시한다.
-  expect(await screen.findByText(/Is Loading.../)).toBeVisible();
+  //페이지 갱신 시 is loading 이라는 문구 를 표시한다.
+  expect(await screen.findByText(/Is Loading.../i)).toBeVisible();
   //page 7 에 있는 article list 를 불러와야 한다.
   const list = await screen.findByRole("list", {
     name: /Article list/i,
   });
 
   //articlepreview 가 5개 있어야된다
-  const articleListElems = within(list).getAllByRole("listitem");
+  const listElems = within(list).getAllByRole("listitem");
+  const articleListElems = listElems.filter(
+    (elem) => !elem.className.includes("tag")
+  );
+
   expect(articleListElems.length).toBe(5);
 
-  const articleList = responseArticleListLimit5.articles;
+  const articleList = articlesFakeResponse.articles;
   //각 articlepreview 는 제목과 내용이 화면에 있어야한다.
   articleListElems.forEach((articleElem, i) => {
     //preview container 를 한정한다.

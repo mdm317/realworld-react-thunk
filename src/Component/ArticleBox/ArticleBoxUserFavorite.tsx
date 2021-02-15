@@ -10,6 +10,7 @@ import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
 import Pagenation from "../Pagenation";
+import Loading from "../Loading";
 
 interface ArticleBoxProp {
   pagePerPagenation: number;
@@ -22,7 +23,7 @@ export default function ArticleBoxUserFavorite({
   const articleList = useSelector(
     (state: RootState) => state.article.userFavoriteArticleList
   );
-  const articleCouts = useSelector(
+  const articleCounts = useSelector(
     (state: RootState) => state.article.userFavoriteArticlesCounts
   );
   const { username } = useParams<{ username: string }>();
@@ -51,14 +52,14 @@ export default function ArticleBoxUserFavorite({
 
   return (
     <>
-      {articleList === null && <h3>Is Loading...</h3>}
+      {articleList === null && <Loading />}
       {articleList?.length === 0 && <h3>No Article!</h3>}
       {articleList && articleList.length > 0 && (
         <>
           <ArticleList articleList={articleList} />
           <Pagenation
             pagePerPagenation={pagePerPagenation}
-            articleCouts={articleCouts}
+            articleCounts={articleCounts}
           />
         </>
       )}

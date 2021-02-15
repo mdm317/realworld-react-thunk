@@ -7,6 +7,7 @@ import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
 import Pagenation from "../Pagenation";
+import Loading from "../Loading";
 
 interface globalArticleListprop {
   pagePerPagenation: number;
@@ -53,26 +54,26 @@ export default function ArticleBoxUserFeed({
   const articleList = useSelector(
     (state: RootState) => state.article.userArticleList
   );
-  const articleCouts = useSelector(
+  const articleCounts = useSelector(
     (state: RootState) => state.article.userArticlesCounts
   );
+
   if (!articleList) {
-    <h3>Is Loading...</h3>;
+    return <Loading />;
   }
   return (
     <>
-      {articleList &&
-        (articleList.length !== 0 ? (
-          <>
-            <ArticleList articleList={articleList} />
-            <Pagenation
-              pagePerPagenation={pagePerPagenation}
-              articleCouts={articleCouts}
-            />
-          </>
-        ) : (
-          <h1>No article here ...</h1>
-        ))}
+      {articleList.length !== 0 ? (
+        <>
+          <ArticleList articleList={articleList} />
+          <Pagenation
+            pagePerPagenation={pagePerPagenation}
+            articleCounts={articleCounts}
+          />
+        </>
+      ) : (
+        <h1>No article here ...</h1>
+      )}
     </>
   );
 }

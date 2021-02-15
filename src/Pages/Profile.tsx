@@ -33,7 +33,7 @@ export default function Profile(): JSX.Element {
   }, [profile?.following]);
 
   const match = useRouteMatch();
-  console.log(match);
+  // console.log(match);
 
   const query = queryString.parse(location.search);
   const [isFavorited, setisFavoited] = useState(query.favorited ? true : false);
@@ -56,6 +56,8 @@ export default function Profile(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState(5);
 
   const clickFollowBtn = () => {
+    // console.log("click follow");
+
     toggleFollow(username, _following)
       .then(() => {
         set_following(!_following);

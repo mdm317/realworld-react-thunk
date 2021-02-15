@@ -4,7 +4,7 @@ interface ResponseArticle {
   articles: Article[];
   articlesCount: number;
 }
-export const responseArticleListLimit5: ResponseArticle = {
+export const articleListLimit5Response: ResponseArticle = {
   articles: [
     {
       slug: "how-to-train-your-dragon",

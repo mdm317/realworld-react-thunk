@@ -13,12 +13,13 @@ interface SettingPostProp {
 }
 export default function SettingPost(): JSX.Element {
   const { slug } = useParams<{ slug: string }>();
-  console.log(slug);
+  // console.log(slug);
 
   const dispatch = useDispatch();
   const articleDetail = useSelector(
     (state: RootState) => state.article.articleDetail
   );
+
   useEffect(() => {
     if (slug) {
       dispatch(getArticleThunk(slug));

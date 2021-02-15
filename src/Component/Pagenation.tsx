@@ -15,11 +15,11 @@ import queryString from "query-string";
 
 interface PagenationProp {
   pagePerPagenation: number;
-  articleCouts: number;
+  articleCounts: number;
 }
 export default function Pagenation({
   pagePerPagenation,
-  articleCouts,
+  articleCounts,
 }: PagenationProp): JSX.Element {
   const [pagenationList, setpagenationList] = useState<number[]>([]);
 
@@ -35,7 +35,7 @@ export default function Pagenation({
   useEffect(() => {
     const pagenationNum = Math.min(
       10,
-      Math.ceil(articleCouts / pagePerPagenation) - startPage + 1
+      Math.ceil(articleCounts / pagePerPagenation) - startPage + 1
     );
 
     const newPagenationList = [...Array(pagenationNum).keys()].map(
@@ -43,7 +43,7 @@ export default function Pagenation({
     );
 
     setpagenationList(newPagenationList);
-  }, [articleCouts]);
+  }, [articleCounts]);
 
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
@@ -59,7 +59,7 @@ export default function Pagenation({
       setpagenationList(newPagenationList);
     } else if (element.id === "nxt") {
       if (
-        Math.ceil(articleCouts / pagePerPagenation) <=
+        Math.ceil(articleCounts / pagePerPagenation) <=
         pagenationList[0] + 9
       ) {
         toast.error("다음 페이지가 없습니다.");

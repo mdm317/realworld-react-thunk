@@ -7,6 +7,7 @@ import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
 import Pagenation from "../Pagenation";
+import Loading from "../Loading";
 
 interface globalArticleListprop {
   pagePerPagenation: number;
@@ -21,14 +22,14 @@ export default function ArticleBoxGlobal({
   const articleList = useSelector(
     (state: RootState) => state.article.articleList
   );
-  const articleCouts = useSelector(
+  const articleCounts = useSelector(
     (state: RootState) => state.article.articlesCounts
   );
   useEffect(() => {
     const query = queryString.parse(location.search);
     const currentPage = query.page;
     const tag = query.tag as string;
-    console.log("tag", tag);
+    // console.log("tag", tag);
 
     const getArticleCondition: GetArticleCondition = {
       limit: pagePerPagenation,
@@ -48,14 +49,14 @@ export default function ArticleBoxGlobal({
 
   return (
     <>
-      {articleList === null && <h3>Is Loading...</h3>}
+      {articleList === null && <Loading />}
       {articleList?.length === 0 && <h3>No Article!</h3>}
       {articleList && articleList.length > 0 && (
         <>
           <ArticleList articleList={articleList} />
           <Pagenation
             pagePerPagenation={pagePerPagenation}
-            articleCouts={articleCouts}
+            articleCounts={articleCounts}
           />
         </>
       )}

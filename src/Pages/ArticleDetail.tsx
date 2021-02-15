@@ -15,7 +15,7 @@ export default function ArticleDetail(): JSX.Element {
 
   const user = useSelector((state: RootState) => state.user.user);
   const username = user?.username;
-  console.log("username", username);
+  // console.log("username", username);
 
   useEffect(() => {
     if (slug) {
@@ -31,7 +31,7 @@ export default function ArticleDetail(): JSX.Element {
     return <h3>is Loading... </h3>;
   }
   const isMyPost = username === article.author.username ? true : false;
-  console.log("istMyPost", isMyPost);
+  // console.log("istMyPost", isMyPost);
 
   return (
     <div className="article-page">

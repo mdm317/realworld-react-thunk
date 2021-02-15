@@ -1,28 +1,17 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  screen,
-  within,
-  waitFor,
-} from "@testing-library/react";
+import { fireEvent, screen } from "@testing-library/react";
 import SettingPost from "../src/Pages/SettingPost";
 import makeStore from "../src/Redux";
-import { createMemoryHistory } from "history";
-import { Provider } from "react-redux";
-import { Router } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import "@testing-library/jest-dom";
 import { loginSucAction } from "../src/Redux/User/action";
-import { fakeUserResponse } from "./ApiResponse/user";
-import { History } from "history";
-
+import { createBrowserHistory } from "history";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { url } from "../src/db";
 import { destroyToken, storeToken } from "../src/Jwt/jwt";
 import { renderDefault } from "./util";
 import { articleFakeResponse } from "./ApiResponse/article";
+import { userFakeResponse } from "./ApiResponse/user";
 
 const server = setupServer();
 const TOKEN = "TOKEN";
@@ -32,6 +21,7 @@ server.use(
   rest.post(url + "/articles", (req, res, ctx) => {
     const { article } = req.body as any;
 
+    //제목 설명 내용이 안들어오면 403 에러를 보낸다
     if (!article.title) {
       return res(ctx.status(403));
     }
@@ -41,9 +31,9 @@ server.use(
     if (!article.body) {
       return res(ctx.status(403));
     }
+
     //토큰이 정상적으로 오는지 확인
     const tokenStr = (req.headers as any).map?.authorization;
-
     if (!tokenStr) {
       return res(ctx.status(401));
     }
@@ -60,12 +50,13 @@ server.use(
   })
 );
 describe("폼 입력후", () => {
-  let history: History;
+  let history: ReturnType<typeof createBrowserHistory>;
   let store: ReturnType<typeof makeStore>;
   beforeEach(() => {
     const rendered = renderDefault(<SettingPost />);
     history = rendered.history;
     store = rendered.store;
+    //form 재목 설명 내용을 입력한다.
     fireEvent.change(screen.getByPlaceholderText(/Article Title/i), {
       target: { value: "title" },
     });
@@ -111,13 +102,14 @@ describe("폼 입력후", () => {
     );
   });
   test("로그인후에 제출하면 등록성공이 화면에 표시됨", async () => {
-    store.dispatch(loginSucAction(fakeUserResponse.user));
+    store.dispatch(loginSucAction(userFakeResponse.user));
     storeToken(TOKEN);
     const submitBtn = screen.getByRole("button", { name: /Publish Article/i });
     //   console.log(submitBtn.tagName);
 
     fireEvent.click(submitBtn);
     await screen.findByText(/add post success/i);
+    expect(history.location.pathname).toEqual("/");
   });
   test("토큰 인증에 문제가 있다면 로그인하라는 메시지가 뜸", async () => {
     const submitBtn = screen.getByRole("button", { name: /Publish Article/i });

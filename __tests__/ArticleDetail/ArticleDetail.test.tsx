@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  render,
-  fireEvent,
-  screen,
-  within,
-  waitFor,
-  findByText,
-} from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import ArticleDetail from "../../src/Pages/ArticleDetail";
 import "@testing-library/jest-dom";
 import marked from "marked";
@@ -15,13 +8,11 @@ import { rest } from "msw";
 import { setupServer } from "msw/node";
 import { url } from "../../src/db";
 import { renderDefault } from "../util";
-import {
-  articleFakeResponse,
-  commentsFakeResponse,
-} from "../ApiResponse/article";
+import { articleFakeResponse } from "../ApiResponse/article";
 import { Route } from "react-router-dom";
 import { loginSucAction } from "../../src/Redux/User/action";
 import { userFakeResponse } from "../ApiResponse/user";
+import { commentsFakeResponse } from "../ApiResponse/comments";
 
 const server = setupServer();
 // const response = await axios.get(url + `/articles/${slug}`, header);

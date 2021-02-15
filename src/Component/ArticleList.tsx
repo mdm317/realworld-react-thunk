@@ -35,7 +35,7 @@ export default function ArticleList({
               <span>Read more...</span>
             </a>
 
-            <div className="tag-list">
+            <div role="list" className="tag-list">
               {article.tagList.map((tag) => (
                 <span
                   role="listitem"

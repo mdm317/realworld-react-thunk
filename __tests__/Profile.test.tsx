@@ -3,7 +3,7 @@ import * as React from "react";
 import { fireEvent, screen, within } from "@testing-library/react";
 import { renderDefault } from "./util";
 import Profile from "../src/Pages/Profile";
-import { Route, Router } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import { rest } from "msw";
 import { setupServer } from "msw/node";
@@ -11,32 +11,46 @@ import { profileFakeResponse, userFakeResponse } from "./ApiResponse/user";
 import { url } from "../src/db";
 import { loginSucAction } from "../src/Redux/User/action";
 import {
-  articleFakeResponse,
   articlesFakeResponse,
   articlesOffsetFakeResponse,
 } from "./ApiResponse/article";
-import { debug } from "webpack";
+import { storeToken } from "../src/Jwt/jwt";
 const server = setupServer();
 server.listen();
 
 const profile = profileFakeResponse.profile;
 server.use(
-  rest.get(url + `/profiles/${profile.username}`, (req, res, ctx) => {
+  rest.get(url + `/profiles/:username`, (req, res, ctx) => {
+    const { username } = req.params;
     return res(ctx.json(profileFakeResponse));
   }),
   rest.post(url + `/profiles/:username/follow`, (req, res, ctx) => {
-    const { username } = req.params;
-
+    // console.log("follow api");
+    // const { username } = req.params;
     const tokenStr = (req.headers as any).map?.authorization;
-    return res(ctx.json(userFakeResponse));
+    //로그인 안되있으면 403
+    if (!tokenStr) {
+      return res(ctx.status(403));
+    }
+    const newUser = { ...profileFakeResponse.profile };
+    newUser.following = true;
+    return res(ctx.json({ profile: newUser }));
   }),
   rest.delete(url + `/profiles/:username/follow`, (req, res, ctx) => {
+    // console.log("unfollow api");
+
     const { username } = req.params;
     // console.log(slug);
     const tokenStr = (req.headers as any).map?.authorization;
-    return res(ctx.json(userFakeResponse));
-  }),
+    //로그인 안되있으면 403
 
+    if (!tokenStr) {
+      return res(ctx.status(403));
+    }
+    const newUser = { ...profileFakeResponse.profile };
+    newUser.following = false;
+    return res(ctx.json({ profile: newUser }));
+  }),
   rest.get(url + `/articles`, (req, res, ctx) => {
     const favorited = req.url.searchParams.get("favorited");
     if (favorited) {
@@ -47,7 +61,7 @@ server.use(
 );
 
 test("프로필 페이지에 이름 bio image follow 버튼이 보여야한다.", async () => {
-  const { history, store } = renderDefault(
+  const { history } = renderDefault(
     <Route path="/profile/:username" component={Profile} />
   );
   history.push("/profile/" + profile.username);
@@ -60,21 +74,12 @@ test("프로필 페이지에 이름 bio image follow 버튼이 보여야한다."
   ) as HTMLImageElement;
   expect(displayedImage.src).toBe(profile.image);
 
+  //비로그인시에는 follow 버튼이 보이지 않는다.
   expect(screen.queryByText("follow")).toBeNull();
-
-  //login
-  store.dispatch(loginSucAction(userFakeResponse.user));
-
-  //follow 동작 테스트
-  const followBtn = screen.getByText(/follow/i);
-  fireEvent.click(followBtn);
-
-  expect(await screen.findByRole("alert")).toHaveTextContent(/success/i);
-  screen.getByText(/unfollow/i);
 });
 
 test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", async () => {
-  const { history, store, debug } = renderDefault(
+  const { history } = renderDefault(
     <Route path="/profile/:username" component={Profile} />
   );
   history.push("/profile/" + profile.username);
@@ -89,7 +94,6 @@ test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", as
     name: /Article list/i,
   });
 
-  //   debug();
   //   articlepreview 가 5개 있어야된다
   const articleListElemList = within(list).getAllByRole("listitem");
 
@@ -112,7 +116,7 @@ test("프로필 페이지에 그 유저가 쓴 글이 보여져야 한다..", as
 });
 
 test("프로필 페이지에 그 유저가 좋아하는 글이 보여져야 한다..", async () => {
-  const { history, store } = renderDefault(
+  const { history } = renderDefault(
     <Route path="/profile/:username" component={Profile} />
   );
   history.push("/profile/" + profile.username);
@@ -145,4 +149,26 @@ test("프로필 페이지에 그 유저가 좋아하는 글이 보여져야 한�
       articleElemWithin.getByText(articleList[i].description)
     ).toBeVisible();
   });
+});
+
+test("follow test", async () => {
+  const { store, history } = renderDefault(
+    <Route path="/profile/:username" component={Profile} />
+  );
+  history.push("/profile/" + profile.username);
+  //login
+  store.dispatch(loginSucAction(userFakeResponse.user));
+  storeToken("THISISTOKEN");
+  //follow 동작 테스트
+  await screen.findByRole("button", { name: /follow/i });
+  const followBtn = screen.getByText(/follow/i);
+  fireEvent.click(followBtn);
+
+  expect(await screen.findByRole("alert")).toHaveTextContent(/follow success/i);
+  screen.getByText(/unfollow/i);
+  // //un follow 동작 테스트
+  fireEvent.click(followBtn);
+
+  expect(await screen.findByText(/unfollow success/i));
+  expect(followBtn).toHaveTextContent(/follow/i);
 });

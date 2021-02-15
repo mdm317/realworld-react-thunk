@@ -1,49 +1,17 @@
 import "@testing-library/jest-dom";
 import React from "react";
-import { render, fireEvent, screen, within } from "@testing-library/react";
+import { fireEvent, screen, within } from "@testing-library/react";
 import Pagenation from "../src/Component/Pagenation";
-import { Provider } from "react-redux";
-import makeStore from "../src/Redux";
-import { storeToken } from "../src/Jwt/jwt";
-import { getArticleList } from "../src/Thunk/article";
-import { getArticleListSuccessAction } from "../src/Redux/Article/action";
-import { createMemoryHistory } from "history";
-import { articlesFakeResponse } from "./ApiResponse/article";
-import { ThunkDispatch } from "redux-thunk";
 
-import { rest } from "msw";
-import { setupServer } from "msw/node";
-import { url } from "../src/db";
-import { Router } from "react-router-dom";
-import { debug } from "webpack";
-import { ToastContainer } from "react-toastify";
+import { renderDefault } from "./util";
 
 const pagePerPagenation = 5;
 
-function renderDefault(component: JSX.Element, store: any, history: any) {
-  return render(
-    <Provider store={store}>
-      <Router history={history}>{component}</Router>
-      <ToastContainer />
-    </Provider>
-  );
-}
-
 test(`40개 의 article 이 있을시 pagenation은
 전 page목록 다음 page 목록 버튼 2개와 page 8개 총 10개 있어야된다`, async () => {
-  const store = makeStore();
-  const history = createMemoryHistory();
-  renderDefault(<Pagenation pagePerPagenation={5} />, store, history);
-
-  //article 들을 불러옴
-  (store.dispatch as any)(
-    getArticleListSuccessAction({
-      articleList: articlesFakeResponse.articles,
-      articlesCount: 40,
-    })
+  renderDefault(
+    <Pagenation pagePerPagenation={pagePerPagenation} articleCounts={40} />
   );
-  //article count 를 받아서 업데이트 될때까지 기다림
-  await screen.findByText("7");
 
   //pagenation ul 을찾음
   const list = screen.getByRole("list", {
@@ -56,20 +24,9 @@ test(`40개 의 article 이 있을시 pagenation은
   expect(pagenationElems.length).toBe(10);
 });
 test(`41개의 article 이 있을시 페이지네이션 개수는 11개여야하고  `, async () => {
-  const store = makeStore();
-  const history = createMemoryHistory();
-
-  renderDefault(<Pagenation pagePerPagenation={5} />, store, history);
-
-  //article 들을 불러옴
-  (store.dispatch as any)(
-    getArticleListSuccessAction({
-      articleList: articlesFakeResponse.articles,
-      articlesCount: 41,
-    })
+  renderDefault(
+    <Pagenation pagePerPagenation={pagePerPagenation} articleCounts={41} />
   );
-  //article count 를 받아서 업데이트 될때까지 기다림
-  await screen.findByText("7");
 
   //pagenation ul 을찾음
   const list = screen.getByRole("list", {
@@ -78,44 +35,13 @@ test(`41개의 article 이 있을시 페이지네이션 개수는 11개여야하
 
   // //pagenation은 전 page목록 다음 page 목록 버튼 2개와 page 9개 총 11개 있어야된다
   const pagenationElems = within(list).getAllByRole("listitem");
-
   expect(pagenationElems.length).toBe(11);
-
-  //article 120개 일때
-  (store.dispatch as any)(
-    getArticleListSuccessAction({
-      articleList: articlesFakeResponse.articles,
-      articlesCount: 120,
-    })
-  );
-  await screen.findByText("7");
-
-  //pagenation ul 을찾음
-  const list2 = screen.getByRole("list", {
-    name: /pagenation/i,
-  });
-
-  // //pagenation은 전 page목록 다음 page 목록 버튼 2개와 page 10개 총 12개 있어야된다
-  const pagenationElems2 = within(list2).getAllByRole("listitem");
-
-  expect(pagenationElems2.length).toBe(12);
 });
 test(`◀ 버튼 누를시 전 페이지네이션 없으면 에러메시지 나태냄
 ▶버튼 누를시 다음 페이지네이션 없으면 에러메시지 나태냄`, async () => {
-  const store = makeStore();
-  const history = createMemoryHistory();
-
-  renderDefault(<Pagenation pagePerPagenation={5} />, store, history);
-
-  //article 들을 불러옴
-  (store.dispatch as any)(
-    getArticleListSuccessAction({
-      articleList: articlesFakeResponse.articles,
-      articlesCount: 40,
-    })
+  renderDefault(
+    <Pagenation pagePerPagenation={pagePerPagenation} articleCounts={41} />
   );
-  //article count 를 받아서 업데이트 될때까지 기다림
-  await screen.findByText("7");
 
   //◀ 버튼을 누를시
   //전의 page 목록이 존재하지 않을때는 toast 로 전 페이지 없음을 알려준다.
@@ -134,20 +60,9 @@ test(`◀ 버튼 누를시 전 페이지네이션 없으면 에러메시지 나�
 
 test(`◀ 버튼 누를시 전 페이지네이션 있을시 전 페이지네이션 나타냄
 ▶버튼 누를시 다음 페이지네이션 있을시 후 페이지네이션 나타냄`, async () => {
-  const store = makeStore();
-  const history = createMemoryHistory();
-
-  renderDefault(<Pagenation pagePerPagenation={5} />, store, history);
-
-  //article 들을 불러옴
-  (store.dispatch as any)(
-    getArticleListSuccessAction({
-      articleList: articlesFakeResponse.articles,
-      articlesCount: 500,
-    })
+  renderDefault(
+    <Pagenation pagePerPagenation={pagePerPagenation} articleCounts={141} />
   );
-  //article count 를 받아서 업데이트 될때까지 기다림
-  await screen.findByText("7");
 
   //pagenation ul 을찾음
   const list = screen.getByRole("list", {
@@ -171,7 +86,7 @@ test(`◀ 버튼 누를시 전 페이지네이션 있을시 전 페이지네이�
     expect(within(list).getByText(i.toString())).toBeVisible();
   }
 
-  // 이전 페이지 목록 버튼을 누르면 1~10 페이지 목록으로 돌아온다 .
+  // 다시 이전 페이지 목록 버튼을 누르면 1~10 페이지 목록으로 돌아온다 .
   const preBtn = screen.getByText("◀");
   fireEvent.click(preBtn);
   for (let i = 1; i <= 10; ++i) {

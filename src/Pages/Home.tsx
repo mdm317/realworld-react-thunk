@@ -23,7 +23,7 @@ function CusLink(username: string) {
 export default function Home(): JSX.Element {
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
-  console.log("match", match);
+  // console.log("match", match);
 
   const username = useSelector((state: RootState) => state.user.user?.username);
   const tagList = useSelector((state: RootState) => state.tag.tagList);
@@ -62,6 +62,7 @@ export default function Home(): JSX.Element {
                   </li>
                   <li className="nav-item">
                     <NavLink
+                      role="button"
                       exact
                       activeClassName="active"
                       className="nav-link "

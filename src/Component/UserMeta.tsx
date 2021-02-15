@@ -37,6 +37,9 @@ export default function UserMeta({ article }: UserMetaProp): JSX.Element {
         setisFavorited(!isFavorited);
         //favorite 상태라면 unfavorite 상태로 만들어야 하니까 -1
         const num = isFavorited ? -1 : 1;
+
+        // console.log("next favorite coutn");
+
         setfavoritecount(favoritecount + num);
       })
       .catch((e: Error) => {
