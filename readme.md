@@ -1,6 +1,11 @@
 # gothinker 프로젝트
 백엔드 html태그 css gochinker 제공   
-gothinker 깃헙 : https://github.com/gothinkster/realworld/tree/master/spec
+gothinker 깃헙 : https://github.com/gothinkster/realworld/tree/master/spec   
+
+
+# 사용 
+typescript + react + redux
+
 
 # 페이지 기능
 * layout
