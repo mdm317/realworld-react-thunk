@@ -1,5 +1,6 @@
 # gothinker 프로젝트
-## 백엔드 html태그 css gochinker 제공
+백엔드 html태그 css gochinker 제공   
+gothinker 깃헙 : https://github.com/gothinkster/realworld/tree/master/spec
 
 # 페이지 기능
 * layout
@@ -35,3 +36,14 @@
     + 로그인시 댓글을 작성할수 있어야한다.
 * editArticle
     + 내가 쓴글을 수정할 수 있어야한다.
+
+# 컴포넌트 구조
+- ArticleDetail
+    - ArticleMyCard / ArticleOthersCard => follow,favorite 이거나 edit delete 기능
+    - CommentBox => 댓글입력 
+- Home
+    - ArticleBoxGlobal / ArticleBoxUserFavorite / ArticleBoxUserFeed  => article 표현
+        - ArticleList
+            - UserMeta => articlepreview 에서 favorite 기능 포함
+            - Pagenation
+    - tagList => tag를 클릭하면 history 에 반영
