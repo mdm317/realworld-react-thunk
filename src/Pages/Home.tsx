@@ -21,6 +21,8 @@ function CusLink(username: string) {
   return <Link to="/userFeed/sdf">cuslInk</Link>;
 }
 export default function Home(): JSX.Element {
+  console.log("빌드시 제거되는 로그");
+
   const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
   const match = useRouteMatch();
   // console.log("match", match);

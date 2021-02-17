@@ -13,6 +13,8 @@ module.exports={
                 version:3
             }
         }],
-        "@babel/preset-react"
-    ]
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+    ],
+    "plugins": ["transform-remove-console"]
 }

@@ -9,7 +9,7 @@ module.exports= {
         contentBase: path.join(__dirname, "dist"),
         publicPath: "/",
         overlay: true,
-        port: 4000,
+        port: 3000,
         stats: "errors-only",
         historyApiFallback: true,
     },
@@ -22,17 +22,12 @@ module.exports= {
     module: {
         rules: [
             {
-            test: /\.js$/,
-            loader: "babel-loader",
-            exclude: /node_modules/,
-            },
-            {
             test: /\.css$/,
             use: ["style-loader", "css-loader"],
             },
             {
                 test: /\.tsx?$/, 
-                loader: "ts-loader",
+                loader: "babel-loader",
                 exclude:/node-modules/
             }
         ],
