@@ -1,5 +1,5 @@
 /* eslint-disable */ //eslint 적용안함
-
+console.log(process.env.NODE_ENV);
 module.exports={
     presets:[
         ["@babel/preset-env",{
@@ -16,5 +16,6 @@ module.exports={
         "@babel/preset-react",
         "@babel/preset-typescript"
     ],
-    "plugins": ["transform-remove-console"]
+    plugins:  process.env.NODE_ENV === "production"?["transform-remove-console"]:[]
+    
 }

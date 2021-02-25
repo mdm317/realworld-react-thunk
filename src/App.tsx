@@ -21,6 +21,7 @@ import history from "./history";
 import SettingUser from "./Pages/SettingUser";
 import Profile from "./Pages/Profile";
 import baseUrl from "./baseurl";
+import ProfileFetch from "./FetchCom/ProfileFetch";
 export default function App(): JSX.Element {
   console.log("root history", history);
 
@@ -41,7 +42,10 @@ export default function App(): JSX.Element {
               path={`${baseUrl}/article/:slug`}
               component={ArticleDetail}
             />
-            <Route path={`${baseUrl}/profile/:username`} component={Profile} />
+            <Route
+              path={`${baseUrl}/profile/:username`}
+              component={ProfileFetch}
+            />
             <Route exact path={`${baseUrl}/`} component={Home} />
             <Redirect path="*" to={`${baseUrl}/`} />
           </Switch>
