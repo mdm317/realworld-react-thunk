@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { GetArticleCondition } from "../../Api/article";
-import { getArticleList, getUserArticleList } from "../../Thunk/article";
+import { getUserArticleListThunk } from "../../Thunk/article";
 import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
@@ -48,7 +48,7 @@ export default function ArticleBoxUserFeed({
     //offset 은 선택
     // console.log("article user");
 
-    dispatch(getUserArticleList(getArticleCondition));
+    dispatch(getUserArticleListThunk(getArticleCondition));
   }, [location, username]);
 
   const articleList = useSelector(

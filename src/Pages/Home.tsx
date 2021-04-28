@@ -1,31 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  BrowserRouter,
-  Link,
-  NavLink,
-  Route,
-  useHistory,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { BrowserRouter, NavLink, Route, useRouteMatch } from "react-router-dom";
 import ArticleBoxGlobal from "../Component/ArticleBox/ArticleBoxGlobal";
 import ArticleBoxUserFeed from "../Component/ArticleBox/ArticleBoxUserFeed";
 import HomeTagList from "../Component/HomeTagList";
 import { RootState } from "../Redux";
 import { getTagListThunk } from "../Thunk/tag";
-import { createLocation } from "history";
-// const pagePerPagenation = 5;
-function CusLink(username: string) {
-  const history = useHistory();
-  return <Link to="/userFeed/sdf">cuslInk</Link>;
-}
+const pagePerPagenationDefault = 5;
 export default function Home(): JSX.Element {
   console.log("빌드시 제거되는 로그");
 
-  const [pagePerPagenation, setpagePerPagenation] = useState<number>(5);
+  const [pagePerPagenation] = useState<number>(pagePerPagenationDefault);
   const match = useRouteMatch();
-  // console.log("match", match);
 
   const username = useSelector((state: RootState) => state.user.user?.username);
   const tagList = useSelector((state: RootState) => state.tag.tagList);

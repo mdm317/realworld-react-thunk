@@ -10,7 +10,6 @@ export interface GetArticleCondition {
   limit?: number;
   author?: string;
   favorited?: string;
-  username?: string;
 }
 export const getArticleListAPI = async (
   payload: GetArticleCondition

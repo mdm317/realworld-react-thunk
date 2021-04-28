@@ -24,7 +24,7 @@ import { Article } from "../db";
 import { favoriteAPI, unFavoriteAPI } from "../Api/article";
 import { AxiosError } from "axios";
 
-export function getArticleList(
+export function getArticleListThunk(
   payload: GetArticleCondition
 ): ThunkAction<void, RootState, null, GetArticleListType> {
   return async (dispatch) => {
@@ -40,7 +40,7 @@ export function getArticleList(
     }
   };
 }
-export function getUserArticleList(
+export function getUserArticleListThunk(
   payload: GetArticleCondition
 ): ThunkAction<void, RootState, null, GetUserArticleListType> {
   return async (dispatch) => {

@@ -1,11 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams, useRouteMatch } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { GetArticleCondition } from "../../Api/article";
-import {
-  getArticleList,
-  getUserFavoriteArticleListThunk,
-} from "../../Thunk/article";
+import { getUserFavoriteArticleListThunk } from "../../Thunk/article";
 import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";

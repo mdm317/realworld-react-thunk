@@ -1,4 +1,3 @@
-import { AxiosError } from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -25,7 +24,7 @@ export default function UserMeta({ article }: UserMetaProp): JSX.Element {
     e.preventDefault();
     // console.log("history", history);
 
-    history.push(`${baseUrl}/profile/${username}`);
+    history.push(`${baseUrl}/profile/${username}?author=${username}`);
   };
   const clickFavorite = () => {
     if (!isLogin) {

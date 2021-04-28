@@ -1,50 +1,32 @@
-import React, { useState } from "react";
-import {
-  BrowserRouter,
-  NavLink,
-  Route,
-  Switch,
-  useRouteMatch,
-} from "react-router-dom";
-import { toast } from "react-toastify";
-import { toggleFollow } from "../Api/user";
-import ArticleBoxUserFavorite from "../Component/ArticleBox/ArticleBoxUserFavorite";
-import ArticleBoxUserFeed from "../Component/ArticleBox/ArticleBoxUserFeed";
-import { Profile } from "../db";
+import React from "react";
+import { match, Route, Switch } from "react-router";
+import { BrowserRouter, NavLink } from "react-router-dom";
+import Loading from "../../Component/Loading";
+import { Profile } from "../../db";
+import ArticleBoxWithHook from "../../Component/ArticleBoxWithHook";
 
-interface ProfileProp {
-  profile: Profile;
+interface ProfilePresenterProp {
+  profile: Profile | undefined;
   loginusername: string | undefined;
+  isMyProfile: boolean;
+  currentFollowing: boolean;
+  clickFollowBtn: () => void;
+  match: match;
+  pagePerPagenation: number;
 }
-export default function ProfilePage({
+
+export default function ProfilePresenter({
   profile,
   loginusername,
-}: ProfileProp): JSX.Element {
-  const match = useRouteMatch();
-
-  const username = profile.username;
-  const isMyProfile = profile.username === loginusername;
-  const [_following, set_following] = useState(profile.following);
-  const [pagePerPagenation] = useState(5);
-
-  const clickFollowBtn = () => {
-    if (!loginusername) {
-      return toast.error("you need to login");
-    }
-    // console.log("click follow");
-    toggleFollow(username, _following)
-      .then(() => {
-        set_following(!_following);
-        if (_following) {
-          toast.success("Unfollow success!");
-        } else {
-          toast.success("Follow success!");
-        }
-      })
-      .catch(() => {
-        toast.error("try rater");
-      });
-  };
+  isMyProfile,
+  currentFollowing,
+  clickFollowBtn,
+  match,
+  pagePerPagenation,
+}: ProfilePresenterProp): JSX.Element {
+  if (!profile) {
+    return <Loading />;
+  }
   return (
     <div className="profile-page">
       <div className="user-info">
@@ -58,11 +40,11 @@ export default function ProfilePage({
                 <button
                   onClick={clickFollowBtn}
                   className={`btn btn-sm btn-outline-secondary action-btn ${
-                    _following ? "active" : ""
+                    currentFollowing ? "active" : ""
                   }`}
                 >
                   <i className="ion-plus-round"></i>
-                  {_following
+                  {currentFollowing
                     ? `✋ UnFollow ${profile.username}`
                     : `🖐 Follow ${profile.username}`}
                 </button>
@@ -81,7 +63,7 @@ export default function ProfilePage({
                   <li className="nav-item">
                     <NavLink
                       exact
-                      to={match.url}
+                      to={match.url + `?author=${profile.username}`}
                       className="nav-link"
                       activeClassName="active"
                     >
@@ -90,7 +72,9 @@ export default function ProfilePage({
                   </li>
                   <li className="nav-item">
                     <NavLink
-                      to={match.url + "/favorited"}
+                      to={
+                        match.url + `/favorited?favorited=${profile.username}`
+                      }
                       className="nav-link"
                       activeClassName="active"
                     >
@@ -104,13 +88,17 @@ export default function ProfilePage({
                   exact
                   path={match.path}
                   render={() => (
-                    <ArticleBoxUserFeed pagePerPagenation={pagePerPagenation} />
+                    <ArticleBoxWithHook
+                      mode="byUser"
+                      pagePerPagenation={pagePerPagenation}
+                    />
                   )}
                 />
                 <Route
                   path={`${match.path}/favorited`}
                   render={() => (
-                    <ArticleBoxUserFavorite
+                    <ArticleBoxWithHook
+                      mode="byFavorite"
                       pagePerPagenation={pagePerPagenation}
                     />
                   )}

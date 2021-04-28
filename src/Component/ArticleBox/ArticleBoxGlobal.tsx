@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useRouteMatch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { GetArticleCondition } from "../../Api/article";
-import { getArticleList } from "../../Thunk/article";
 import ArticleList from "../ArticleList";
 import queryString from "query-string";
 import { RootState } from "../../Redux";
 import Pagenation from "../Pagenation";
 import Loading from "../Loading";
+import { getArticleListThunk } from "../../Thunk/article";
 
 interface globalArticleListprop {
   pagePerPagenation: number;
@@ -44,7 +44,7 @@ export default function ArticleBoxGlobal({
     }
     // console.log("article global");
 
-    dispatch(getArticleList(getArticleCondition));
+    dispatch(getArticleListThunk(getArticleCondition));
   }, [location]);
 
   return (

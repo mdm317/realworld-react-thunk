@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { addPost, addPostAPI, editArticle } from "../../Api/article";
+import { addPost, editArticle } from "../../Api/article";
 import { Article } from "../../db";
 import Input from "../Input";
 import TextArea from "../TextArea";

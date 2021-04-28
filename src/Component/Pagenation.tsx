@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import {
-  Link,
-  NavLink,
-  useHistory,
-  useLocation,
-  useRouteMatch,
-} from "react-router-dom";
+import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { LocationDescriptorObject, Location } from "history";
 
 import { toast } from "react-toastify";
-import { RootState } from "../Redux";
 import queryString from "query-string";
 
 interface PagenationProp {
@@ -23,7 +15,6 @@ export default function Pagenation({
 }: PagenationProp): JSX.Element {
   const [pagenationList, setpagenationList] = useState<number[]>([]);
 
-  const match = useRouteMatch();
   const location = useLocation();
 
   const query = queryString.parse(location.search);
