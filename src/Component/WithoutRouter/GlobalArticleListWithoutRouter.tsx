@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
 import { GetArticleCondition } from "../../Api/article";
-import { getArticleList } from "../../Thunk/article";
-import ArticleList from "../ArticleList";
 
 interface globalArticleListprop {
   getArticleCondition: GetArticleCondition;

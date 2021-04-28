@@ -1,8 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import { logOutAPI } from "../../Api/user";
 import { RootState } from "../../Redux";
 import { logoutThunk } from "../../Thunk/user";
 import baseUrl from "../../baseurl";

@@ -1,22 +1,16 @@
 import React from "react";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  Route,
-  Switch,
-  Router,
-  Redirect,
-  BrowserRouter,
-} from "react-router-dom";
+import { Route, Switch, Router, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import Home from "./Pages/Home";
+// import Home from "./Pages/Home";
 import SignUp from "./Pages/SignUp";
-import Login from "./Pages/Login";
+// import Login from "./Pages/Login";
 import SettingPost from "./Pages/SettingPost";
 import Layout from "./Component/Layout/Layout";
-import ArticleDetail from "./Pages/ArticleDetail";
+// import ArticleDetail from "./Pages/ArticleDetail";
 import history from "./history";
-import SettingUser from "./Pages/SettingUser";
+// import SettingUser from "./Pages/SettingUser";
 import baseUrl from "./baseurl";
 import ProfileFetch from "./FetchCom/ProfileFetch";
 import HomeContainer from "./PagesWithContainerPresenter/Home/HomeContainer";

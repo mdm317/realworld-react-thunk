@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
 import { RootState } from "../../Redux";
 

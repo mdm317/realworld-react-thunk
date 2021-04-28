@@ -1,12 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { followAPI, toggleFollow } from "../../Api/user";
+
 import { deleteArticle } from "../../ApiWrapper/article";
 import { Article } from "../../db";
-import articleReducer from "../../Redux/Article/reducer";
-import { getMonthDate } from "../../util";
 import baseUrl from "../../baseurl";
 import UserIcon from "../UserIcon";
 

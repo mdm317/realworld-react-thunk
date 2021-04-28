@@ -1,14 +1,11 @@
-import { getFileInfo } from "prettier";
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { toggleFollow } from "../../Api/user";
 import { Article } from "../../db";
 import { AppDispatch } from "../../Redux";
 import { toggleArticleFollowAction } from "../../Redux/Article/action";
-import articleReducer from "../../Redux/Article/reducer";
 import { toggleFavoriteThunk } from "../../Thunk/article";
-import { getMonthDate } from "../../util";
 import UserIcon from "../UserIcon";
 
 interface ArticleOthersCardProp {

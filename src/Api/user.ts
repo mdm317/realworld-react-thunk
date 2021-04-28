@@ -1,6 +1,6 @@
 import axios from "axios";
 import Axios from "axios";
-import { LoginUser, url, User } from "../db";
+import { LoginUser, url } from "../db";
 import { destroyToken, getToken } from "../Jwt/jwt";
 import { UpdateUserProp } from "../types";
 interface LoginPayload {

@@ -1,4 +1,4 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { Article, Comment, url } from "../db";
 import { getToken } from "../Jwt/jwt";
 import { ArticleListAndCount } from "../Redux/Article/action";

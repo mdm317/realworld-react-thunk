@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { matchPath, useLocation, useRouteMatch } from "react-router";
+import { matchPath, useRouteMatch } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import { useArticleList } from "../../Hooks/useArticleList";
 // import WrapRouter from "../../Component/WrapRouter";
 import { RootState } from "../../Redux";
-import {
-  getArticleListThunk,
-  getUserArticleListThunk,
-} from "../../Thunk/article";
+
 import { getTagListThunk } from "../../Thunk/tag";
 import HomePresenter from "./HomePresenter";
 

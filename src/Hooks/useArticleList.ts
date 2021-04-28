@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { matchPath, useLocation, useRouteMatch } from "react-router";
+import { useLocation } from "react-router";
 import {
   getArticleListThunk,
   getUserFavoriteArticleListThunk,

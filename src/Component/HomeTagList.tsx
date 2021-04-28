@@ -7,7 +7,6 @@ interface TagListProp {
   tagList?: string[];
 }
 export default function HomeTagList({ tagList }: TagListProp): JSX.Element {
-  const history = useHistory();
   const [activeTag, setactiveTag] = useState("");
   useEffect(() => {
     const parsed = queryString.parse(location.search);

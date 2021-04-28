@@ -5,7 +5,6 @@ import HomeTagList from "../../Component/HomeTagList";
 import Loading from "../../Component/Loading";
 import Pagenation from "../../Component/Pagenation";
 import { Article } from "../../db";
-import { linkToProp } from "../../Utiles/locationUtil";
 
 interface HomePresenterProp {
   articleList: Article[] | null;

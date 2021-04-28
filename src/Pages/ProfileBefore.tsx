@@ -5,7 +5,6 @@ import {
   NavLink,
   Route,
   Switch,
-  useLocation,
   useParams,
   useRouteMatch,
 } from "react-router-dom";
@@ -38,7 +37,7 @@ export default function ProfileBefore(): JSX.Element {
   console.log("location", location);
   const query = queryString.parse(location.search);
 
-  const [isFavorited, setisFavoited] = useState(query.favorited ? true : false);
+  const [, setisFavoited] = useState(query.favorited ? true : false);
   useEffect(() => {
     setisFavoited(query.favorited ? true : false);
   }, [query.favorited]);
@@ -55,7 +54,7 @@ export default function ProfileBefore(): JSX.Element {
       dispatch(getProfileThunk(username));
     }
   }, [username]);
-  const [pagePerPagenation, setpagePerPagenation] = useState(5);
+  const [pagePerPagenation] = useState(5);
 
   const clickFollowBtn = () => {
     // console.log("click follow");
