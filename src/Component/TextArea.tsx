@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { editArticle } from "../Api/article";
 
 interface TextAreaProp {
   value?: string;
