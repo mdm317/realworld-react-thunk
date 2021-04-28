@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { GetArticleCondition } from "../../Api/article";
+import { getArticleListThunk } from "../../Thunk/article";
 
 interface globalArticleListprop {
   getArticleCondition: GetArticleCondition;
@@ -10,7 +11,7 @@ export default function GlobalArticleList({
 }: globalArticleListprop): JSX.Element {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getArticleList(getArticleCondition));
+    dispatch(getArticleListThunk(getArticleCondition));
   }, []);
   return <>{/* <ArticleList /> */}</>;
 }
